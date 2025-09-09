@@ -1,8 +1,10 @@
-// Openapi Generator last run: : 2025-09-09T22:14:23.113072
+// Openapi Generator last run: : 2025-09-09T23:02:18.742827
 import "package:flutter/material.dart";
+import "package:hydrogarden_mobile/app/l10n/arb/app_localizations.g.dart";
 import "package:hydrogarden_mobile/presentation/features/home/home_page.dart";
 import "package:openapi_generator_annotations/openapi_generator_annotations.dart";
 import "package:go_router/go_router.dart";
+import "theme/app_theme.dart";
 
 part "router.dart";
 
@@ -18,9 +20,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       title: "Hydrogarden Mobile",
-      // theme: appTheme.light,
-      // localizationsDelegates: AppLocalizations.localizationsDelegates,
-      // supportedLocales: AppLocalizations.supportedLocales,
+      theme: AppTheme().light,
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
       routerConfig: _router,
     );
   }
