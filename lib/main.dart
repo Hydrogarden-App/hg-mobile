@@ -1,9 +1,16 @@
+// Openapi Generator last run: : 2025-09-09T20:12:59.399494
 import "package:flutter/material.dart";
+import "package:openapi_generator_annotations/openapi_generator_annotations.dart";
 
 void main() {
   runApp(const MyApp());
 }
 
+@Openapi(
+  inputSpec: InputSpec(path: "../hg-openapi/lib/openapi.yaml"),
+  outputDirectory: "api",
+  generatorName: Generator.dio,
+)
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 

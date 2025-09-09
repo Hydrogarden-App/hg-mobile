@@ -126,6 +126,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.4"
+  cli_launcher:
+    dependency: transitive
+    description:
+      name: cli_launcher
+      sha256: "17d2744fb9a254c49ec8eda582536abe714ea0131533e24389843a4256f82eac"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.3.2+1"
   clock:
     dependency: transitive
     description:
@@ -293,22 +301,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  freezed:
-    dependency: "direct main"
-    description:
-      name: freezed
-      sha256: "44c19278dd9d89292cf46e97dc0c1e52ce03275f40a97c5a348e802a924bf40e"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.5.7"
-  freezed_annotation:
-    dependency: transitive
-    description:
-      name: freezed_annotation
-      sha256: c2e2d632dd9b8a2b7751117abcfc2b4888ecfe181bd9fca7170d9ef02e595fe2
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.4.4"
   frontend_server_client:
     dependency: transitive
     description:
@@ -476,11 +468,27 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.0"
+  openapi_generator:
+    dependency: "direct dev"
+    description:
+      name: openapi_generator
+      sha256: fb39046f1753d92d2e25d1b4b132dd4f5b462b3b1b8af4a2b63078b8ac8e3a56
+      url: "https://pub.dev"
+    source: hosted
+    version: "6.1.0"
   openapi_generator_annotations:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: openapi_generator_annotations
       sha256: "5b4d548c18b417cfc6abd03098a28971d6211d6e10ec57e4f8fb9b2eb46c0641"
+      url: "https://pub.dev"
+    source: hosted
+    version: "6.1.0"
+  openapi_generator_cli:
+    dependency: transitive
+    description:
+      name: openapi_generator_cli
+      sha256: a7b764d8b121ecb7cdd466c688da1e1a592f7fff73673dcdb35ee5009f49739b
       url: "https://pub.dev"
     source: hosted
     version: "6.1.0"

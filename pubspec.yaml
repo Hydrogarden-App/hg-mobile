@@ -15,7 +15,7 @@ dependencies:
   cupertino_icons: ^1.0.8
 
   # generators
-  freezed: ^2.5.0
+  openapi_generator_annotations: ^6.1.0
 
   # persistence
   flutter_secure_storage: ^9.2.4
@@ -27,7 +27,8 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  
+
+  openapi_generator: ^6.1.0
   build_runner: ^2.5.4
   flutter_lints: ^5.0.0
   husky: ^0.1.7
