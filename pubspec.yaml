@@ -17,6 +17,9 @@ dependencies:
   # generators
   openapi_generator_annotations: ^6.1.0
 
+  # router
+  go_router: ^16.2.1
+
   # persistence
   flutter_secure_storage: ^9.2.4
   drift: ^2.28.1
