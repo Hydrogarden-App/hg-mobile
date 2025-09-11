@@ -14,5 +14,19 @@
     "auth_error_password_empty": "Hasło nie może być puste",
     "auth_error_email_invalid": "Podaj poprawny adres email",
     "auth_error_password_too_short": "Hasło musi mieć co najmniej {passLen} znaków",
-    "auth_error_passwords_must_match": "Hasła muszą się zgadzać"
+    "auth_error_passwords_must_match": "Hasła muszą się zgadzać",
+
+    "circuit_list_title": "Szczegóły obwodów",
+
+    "device_info_circuit_info": "Szczegóły obwodów",
+    "device_info_watering_schedule": "Harmonogram podlewania",
+    "device_info_see_logs": "Zobacz logi",
+
+    "home_title": "Hydrogarden",
+    "home_subtitle": "Twoje urządzenia",
+
+    "logs_title": "Logi urządzenia",
+
+    "settings_title": "Ustawienia",
+    "settings_logout": "Wyloguj się"
 }

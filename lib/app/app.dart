@@ -7,6 +7,10 @@ import "package:hydrogarden_mobile/app/stream_to_listenable.dart";
 import "package:hydrogarden_mobile/domain/authentication_status.dart";
 import "package:hydrogarden_mobile/presentation/features/authentication/pages/login_page.dart";
 import "package:hydrogarden_mobile/presentation/features/authentication/pages/register_page.dart";
+import "package:hydrogarden_mobile/presentation/features/circuit_list/circuit_list_page.dart";
+import "package:hydrogarden_mobile/presentation/features/device_info/device_info_page.dart";
+import "package:hydrogarden_mobile/presentation/features/logs/logs_page.dart";
+import "package:hydrogarden_mobile/presentation/features/settings/settings_page.dart";
 import "package:openapi_generator_annotations/openapi_generator_annotations.dart";
 
 import "package:hydrogarden_mobile/app/l10n/arb/app_localizations.g.dart";
