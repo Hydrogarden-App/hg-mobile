@@ -28,6 +28,44 @@ final _router = GoRouter(
         return NoTransitionPage(child: const RegisterPage());
       },
     ),
+    GoRoute(
+      path: DeviceInfoPage.route,
+      pageBuilder: (context, state) {
+        return NoTransitionPage(child: const DeviceInfoPage());
+      },
+    ),
+    GoRoute(
+      path: CircuitListPage.route,
+      pageBuilder: (context, state) {
+        return NoTransitionPage(child: const CircuitListPage());
+      },
+    ),
+    GoRoute(
+      path: LogsPage.route,
+      pageBuilder: (context, state) {
+        return NoTransitionPage(child: const LogsPage());
+      },
+    ),
+    GoRoute(
+      path: SettingsPage.route,
+      pageBuilder: (context, state) {
+        return CustomTransitionPage(
+          child: const SettingsPage(),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            const begin = Offset(0.0, -0.3);
+            const end = Offset.zero;
+            final tween = Tween(
+              begin: begin,
+              end: end,
+            ).chain(CurveTween(curve: Curves.easeInOut));
+            return SlideTransition(
+              position: animation.drive(tween),
+              child: child,
+            );
+          },
+        );
+      },
+    ),
   ],
   refreshListenable: _authRefresh,
   redirect: (context, state) {
