@@ -1,9 +1,10 @@
-import "package:bloc/bloc.dart";
 import "package:equatable/equatable.dart";
+import "package:flutter_bloc/flutter_bloc.dart";
+
 import "package:hydrogarden_mobile/app/dependency_injection.dart";
 import "package:hydrogarden_mobile/app/remote/client_provider.dart";
 import "package:hydrogarden_mobile/domain/repository/authentication_repository.dart";
-import "package:hydrogarden_mobile/presentation/features/authentication/authentication_status.dart";
+import "package:hydrogarden_mobile/domain/authentication_status.dart";
 
 part "authentication_event.dart";
 part "authentication_state.dart";
@@ -28,6 +29,7 @@ class AuthenticationBloc
         email: event.email,
         password: event.password,
       );
+      print("${event.email}, ${event.password}, $token");
       _clientProvider.updateToken(token);
       emit(AuthenticationState.authenticated(token));
     });

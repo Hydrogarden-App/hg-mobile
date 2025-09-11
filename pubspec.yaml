@@ -13,9 +13,10 @@ dependencies:
 
   # ui
   cupertino_icons: ^1.0.8
+  reactive_forms: ^18.1.1
 
   #state
-  bloc: ^9.0.0
+  flutter_bloc: ^9.1.1
   get_it: ^8.2.0
 
   # router

@@ -4,6 +4,7 @@ import "package:hydrogarden_mobile/app/remote/client_provider.dart";
 import "package:hydrogarden_mobile/data/repository/authentication_local_repository_impl.dart";
 import "package:hydrogarden_mobile/data/repository/authentication_remote_repository_impl.dart";
 import "package:hydrogarden_mobile/data/repository/authentication_repository_impl.dart";
+import "package:hydrogarden_mobile/domain/repository/authentication_repository.dart";
 
 GetIt getIt = GetIt.instance;
 
@@ -13,12 +14,12 @@ void setup() {
 }
 
 void _setupClient() {
-  getIt.registerSingleton(ClientProvider());
+  getIt.registerSingleton<ClientProvider>(ClientProvider());
 }
 
 void _setupRepository() {
-  getIt.registerSingleton(
-    () => AuthenticationRepositoryImpl(
+  getIt.registerSingleton<AuthenticationRepository>(
+    AuthenticationRepositoryImpl(
       localAuth: AuthenticationLocalRepositoryImpl(FlutterSecureStorage()),
       remoteAuth: AuthenticationRemoteRepositoryImpl(
         getIt.get<ClientProvider>().getUnauthenticatedClient(),

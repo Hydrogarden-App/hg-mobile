@@ -1,0 +1,18 @@
+{
+    "@@locale": "pl",
+
+    "auth_title": "Hydrogarden",
+    "auth_subtitle": "Twój asystent podlewania",
+    "auth_field_email": "Email",
+    "auth_field_password": "Hasło",
+    "auth_field_password_repeat": "Powtórz hasło",
+    "auth_login": "Zaloguj się!",
+    "auth_register": "Zarejestruj się!",
+    "auth_helper_dont_have_an_account": "Nie masz konta?",
+    "auth_helper_already_have_an_account": "Masz już konto?",
+    "auth_error_email_empty": "Email nie może być pusty",
+    "auth_error_password_empty": "Hasło nie może być puste",
+    "auth_error_email_invalid": "Podaj poprawny adres email",
+    "auth_error_password_too_short": "Hasło musi mieć co najmniej {passLen} znaków",
+    "auth_error_passwords_must_match": "Hasła muszą się zgadzać"
+}
