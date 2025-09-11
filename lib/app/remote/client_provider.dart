@@ -1,30 +1,29 @@
-// import "package:dio/dio.dart";
-// import "package:hydrogarden_mobile/api/lib/src/api.dart";
+import "package:dio/dio.dart";
+import "package:openapi/openapi.dart";
 
-// import "auth_interceptor.dart";
+import "auth_interceptor.dart";
 
-// class ClientProvider {
-//   late final Dio _dio;
+class ClientProvider {
+  late final Dio _authDio;
+  late final Dio _unauthDio;
 
-//   late final Openapi _openapi;
-//   late final AuthInterceptor _interceptor;
+  late final Openapi _authOpenapi;
+  late final Openapi _unauthOpenapi;
 
-//   ClientProvider() {
-//     _dio = Dio();
-//     _openapi = Openapi(dio: _dio);
-//     _interceptor = AuthInterceptor(dio: _dio);
-//   }
+  late final AuthInterceptor _interceptor;
 
-//   Openapi getUnauthenticatedClient() {
-//     _dio.interceptors.remove(_interceptor);
-//     return _openapi;
-//   }
+  ClientProvider() {
+    _authDio = Dio();
+    _unauthDio = Dio();
+    _unauthOpenapi = Openapi(dio: _authDio);
+    _authOpenapi = Openapi(dio: _unauthDio);
+    _interceptor = AuthInterceptor(dio: _authDio);
+  }
 
-//   Openapi getAuthenticatedClient(String token) {
-//     _interceptor.setToken(token);
-//     if (!_dio.interceptors.contains(_interceptor)) {
-//       _dio.interceptors.add(_interceptor);
-//     }
-//     return _openapi;
-//   }
-// }
+  Openapi getUnauthenticatedClient() => _unauthOpenapi;
+  Openapi getAuthenticatedClient() => _authOpenapi;
+
+  void updateToken(String token) {
+    _interceptor.setToken(token);
+  }
+}

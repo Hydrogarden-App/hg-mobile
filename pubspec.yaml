@@ -30,6 +30,8 @@ dependencies:
   openapi_generator_annotations: ^6.1.0
   hg_openapi:
     path: ../hg-openapi
+  openapi:
+    path: ../openapi
   
   # localization
   flutter_localizations:

@@ -20,9 +20,9 @@ class AuthInterceptor extends Interceptor {
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
     if (_token != null) {
-      options.headers["Authorization"] = "Bearer $_token";
+      options.headers["Authorization"] = "Bearer: $_token";
     }
-    handler.next(options);
+    return handler.next(options);
   }
 
   @override

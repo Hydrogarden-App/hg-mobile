@@ -1,4 +1,4 @@
-// Openapi Generator last run: : 2025-09-10T16:08:44.431163
+// Openapi Generator last run: : 2025-09-10T17:02:40.980825
 import "package:flutter/material.dart";
 import "package:hydrogarden_mobile/app/l10n/arb/app_localizations.g.dart";
 import "package:hydrogarden_mobile/presentation/features/home/home_page.dart";
@@ -10,7 +10,7 @@ part "router.dart";
 
 @Openapi(
   inputSpec: InputSpec(path: "../hg-openapi/lib/openapi.yaml"),
-  outputDirectory: "lib/api",
+  outputDirectory: "../openapi",
   generatorName: Generator.dio,
 )
 class MyApp extends StatelessWidget {
