@@ -15,6 +15,17 @@ class AuthenticationBloc
   final ClientProvider _clientProvider = getIt.get();
 
   AuthenticationBloc() : super(const AuthenticationState.unknown()) {
+    on<AuthenticationCheckRequested>((event, emit) async {
+      final token = await _authenticationRepository.getToken();
+
+      if (token != null) {
+        _clientProvider.updateToken(token);
+        emit(AuthenticationState.authenticated(token));
+      } else {
+        emit(const AuthenticationState.unauthenticated());
+      }
+    });
+
     on<AuthenticationSignupRequested>((event, emit) async {
       final token = await _authenticationRepository.register(
         email: event.email,
@@ -29,7 +40,6 @@ class AuthenticationBloc
         email: event.email,
         password: event.password,
       );
-      print("${event.email}, ${event.password}, $token");
       _clientProvider.updateToken(token);
       emit(AuthenticationState.authenticated(token));
     });
@@ -38,5 +48,7 @@ class AuthenticationBloc
       await _authenticationRepository.logout();
       emit(AuthenticationState.unauthenticated());
     });
+
+    add(AuthenticationCheckRequested());
   }
 }

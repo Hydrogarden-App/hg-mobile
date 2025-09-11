@@ -2,6 +2,9 @@
 import "package:flutter/material.dart";
 import "package:flutter_bloc/flutter_bloc.dart";
 import "package:go_router/go_router.dart";
+import "package:hydrogarden_mobile/app/dependency_injection.dart";
+import "package:hydrogarden_mobile/app/stream_to_listenable.dart";
+import "package:hydrogarden_mobile/domain/authentication_status.dart";
 import "package:hydrogarden_mobile/presentation/features/authentication/pages/login_page.dart";
 import "package:hydrogarden_mobile/presentation/features/authentication/pages/register_page.dart";
 import "package:openapi_generator_annotations/openapi_generator_annotations.dart";
@@ -26,8 +29,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider<AuthenticationBloc>(
-          create: (context) => AuthenticationBloc(),
+        BlocProvider<AuthenticationBloc>.value(
+          value: getIt<AuthenticationBloc>(),
         ),
       ],
       child: MaterialApp.router(

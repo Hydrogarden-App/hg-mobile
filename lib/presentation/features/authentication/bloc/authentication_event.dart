@@ -18,4 +18,6 @@ final class AuthenticationLoginRequested extends AuthenticationEvent {
 
 final class AuthenticationLogoutRequested extends AuthenticationEvent {}
 
+final class AuthenticationCheckRequested extends AuthenticationEvent {}
+
 final class AuthenticationRefreshTokenRequested extends AuthenticationEvent {}

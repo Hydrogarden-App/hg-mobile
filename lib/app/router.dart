@@ -2,8 +2,12 @@ part of "app.dart";
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 
+final StreamToListenable _authRefresh = StreamToListenable(
+  getIt<AuthenticationBloc>().stream,
+);
+
 final _router = GoRouter(
-  initialLocation: LoginPage.route,
+  initialLocation: HomePage.route,
   navigatorKey: _rootNavigatorKey,
   routes: [
     GoRoute(
@@ -15,18 +19,34 @@ final _router = GoRouter(
     GoRoute(
       path: LoginPage.route,
       pageBuilder: (context, state) {
-        print("lgin");
         return NoTransitionPage(child: const LoginPage());
       },
     ),
     GoRoute(
       path: RegisterPage.route,
       pageBuilder: (context, state) {
-        print("register");
         return NoTransitionPage(child: const RegisterPage());
       },
     ),
   ],
+  refreshListenable: _authRefresh,
+  redirect: (context, state) {
+    final loggedIn =
+        context.read<AuthenticationBloc>().state.status ==
+        AuthenticationStatus.authenticated;
+    final loggingIn =
+        state.matchedLocation == LoginPage.route ||
+        state.matchedLocation == RegisterPage.route;
+    if (!loggedIn && !loggingIn) {
+      return LoginPage.route;
+    }
+
+    if (loggedIn && loggingIn) {
+      return HomePage.route;
+    }
+
+    return null;
+  },
 );
 
 extension ContexRouterX on BuildContext {
