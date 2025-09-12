@@ -1,7 +1,7 @@
 import "package:equatable/equatable.dart";
 import "package:flutter_bloc/flutter_bloc.dart";
 
-import "package:hydrogarden_mobile/app/remote/client_provider.dart";
+import "package:hydrogarden_mobile/app/datasource/remote/client_provider.dart";
 import "package:hydrogarden_mobile/domain/authentication/repositories/authentication_repository.dart";
 import "package:hydrogarden_mobile/domain/authentication/authentication_status.dart";
 

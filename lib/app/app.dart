@@ -1,9 +1,9 @@
-// Openapi Generator last run: : 2025-09-12T16:01:42.957852
+// Openapi Generator last run: : 2025-09-12T22:52:54.227840
 import "package:flutter/material.dart";
 import "package:flutter_bloc/flutter_bloc.dart";
 import "package:go_router/go_router.dart";
-import "package:hydrogarden_mobile/app/dependency_injection.dart";
-import "package:hydrogarden_mobile/app/stream_to_listenable.dart";
+import "package:hydrogarden_mobile/app/utils/dependency_injection.dart";
+import "package:hydrogarden_mobile/app/utils/stream_to_listenable.dart";
 import "package:hydrogarden_mobile/domain/authentication/authentication_status.dart";
 import "package:hydrogarden_mobile/presentation/authentication/pages/login_page.dart";
 import "package:hydrogarden_mobile/presentation/authentication/pages/register_page.dart";

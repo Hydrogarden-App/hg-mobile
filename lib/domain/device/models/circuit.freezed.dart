@@ -20,9 +20,13 @@ Circuit _$CircuitFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Circuit {
+  @HiveField(0)
   int get id => throw _privateConstructorUsedError;
+  @HiveField(1)
   String get name => throw _privateConstructorUsedError;
+  @HiveField(2)
   bool get state => throw _privateConstructorUsedError;
+  @HiveField(3)
   bool get desiredState => throw _privateConstructorUsedError;
 
   /// Serializes this Circuit to a JSON map.
@@ -39,7 +43,11 @@ abstract class $CircuitCopyWith<$Res> {
   factory $CircuitCopyWith(Circuit value, $Res Function(Circuit) then) =
       _$CircuitCopyWithImpl<$Res, Circuit>;
   @useResult
-  $Res call({int id, String name, bool state, bool desiredState});
+  $Res call(
+      {@HiveField(0) int id,
+      @HiveField(1) String name,
+      @HiveField(2) bool state,
+      @HiveField(3) bool desiredState});
 }
 
 /// @nodoc
@@ -90,7 +98,11 @@ abstract class _$$CircuitImplCopyWith<$Res> implements $CircuitCopyWith<$Res> {
       __$$CircuitImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int id, String name, bool state, bool desiredState});
+  $Res call(
+      {@HiveField(0) int id,
+      @HiveField(1) String name,
+      @HiveField(2) bool state,
+      @HiveField(3) bool desiredState});
 }
 
 /// @nodoc
@@ -136,21 +148,25 @@ class __$$CircuitImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$CircuitImpl implements _Circuit {
   const _$CircuitImpl(
-      {required this.id,
-      required this.name,
-      required this.state,
-      required this.desiredState});
+      {@HiveField(0) required this.id,
+      @HiveField(1) required this.name,
+      @HiveField(2) required this.state,
+      @HiveField(3) required this.desiredState});
 
   factory _$CircuitImpl.fromJson(Map<String, dynamic> json) =>
       _$$CircuitImplFromJson(json);
 
   @override
+  @HiveField(0)
   final int id;
   @override
+  @HiveField(1)
   final String name;
   @override
+  @HiveField(2)
   final bool state;
   @override
+  @HiveField(3)
   final bool desiredState;
 
   @override
@@ -192,20 +208,24 @@ class _$CircuitImpl implements _Circuit {
 
 abstract class _Circuit implements Circuit {
   const factory _Circuit(
-      {required final int id,
-      required final String name,
-      required final bool state,
-      required final bool desiredState}) = _$CircuitImpl;
+      {@HiveField(0) required final int id,
+      @HiveField(1) required final String name,
+      @HiveField(2) required final bool state,
+      @HiveField(3) required final bool desiredState}) = _$CircuitImpl;
 
   factory _Circuit.fromJson(Map<String, dynamic> json) = _$CircuitImpl.fromJson;
 
   @override
+  @HiveField(0)
   int get id;
   @override
+  @HiveField(1)
   String get name;
   @override
+  @HiveField(2)
   bool get state;
   @override
+  @HiveField(3)
   bool get desiredState;
 
   /// Create a copy of Circuit

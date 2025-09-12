@@ -1,12 +1,13 @@
 import "package:hydrogarden_mobile/data/device/extensions/dto_to_domain_extension.dart";
 import "package:hydrogarden_mobile/domain/device/models/device.dart";
-import "package:hydrogarden_mobile/domain/device/repositories/device_repository.dart";
+import "package:hydrogarden_mobile/domain/device/repositories/device_state_repository.dart";
 import "package:openapi/openapi.dart";
 
-class DeviceRepositoryImpl implements DeviceRepository {
+class DeviceStateRepositoryRemoteImpl implements DeviceStateRepository {
   final DeviceVitalsApi _api;
 
-  DeviceRepositoryImpl(Openapi client) : _api = client.getDeviceVitalsApi();
+  DeviceStateRepositoryRemoteImpl(Openapi client)
+    : _api = client.getDeviceVitalsApi();
 
   @override
   Future<Device> disableCircuit(int deviceId, int circuitId) async {

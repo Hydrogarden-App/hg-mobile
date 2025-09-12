@@ -20,12 +20,19 @@ Device _$DeviceFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Device {
+  @HiveField(0)
   int get id => throw _privateConstructorUsedError;
+  @HiveField(1)
   String get name => throw _privateConstructorUsedError;
+  @HiveField(2)
   DeviceState get state => throw _privateConstructorUsedError;
+  @HiveField(3)
   DeviceState get desiredState => throw _privateConstructorUsedError;
+  @HiveField(4)
   DateTime get lastKeepAliveSendTime => throw _privateConstructorUsedError;
+  @HiveField(5)
   DateTime get lastHeartbeatReceiveTime => throw _privateConstructorUsedError;
+  @HiveField(6)
   List<Circuit> get circuits => throw _privateConstructorUsedError;
 
   /// Serializes this Device to a JSON map.
@@ -43,13 +50,13 @@ abstract class $DeviceCopyWith<$Res> {
       _$DeviceCopyWithImpl<$Res, Device>;
   @useResult
   $Res call(
-      {int id,
-      String name,
-      DeviceState state,
-      DeviceState desiredState,
-      DateTime lastKeepAliveSendTime,
-      DateTime lastHeartbeatReceiveTime,
-      List<Circuit> circuits});
+      {@HiveField(0) int id,
+      @HiveField(1) String name,
+      @HiveField(2) DeviceState state,
+      @HiveField(3) DeviceState desiredState,
+      @HiveField(4) DateTime lastKeepAliveSendTime,
+      @HiveField(5) DateTime lastHeartbeatReceiveTime,
+      @HiveField(6) List<Circuit> circuits});
 }
 
 /// @nodoc
@@ -116,13 +123,13 @@ abstract class _$$DeviceImplCopyWith<$Res> implements $DeviceCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {int id,
-      String name,
-      DeviceState state,
-      DeviceState desiredState,
-      DateTime lastKeepAliveSendTime,
-      DateTime lastHeartbeatReceiveTime,
-      List<Circuit> circuits});
+      {@HiveField(0) int id,
+      @HiveField(1) String name,
+      @HiveField(2) DeviceState state,
+      @HiveField(3) DeviceState desiredState,
+      @HiveField(4) DateTime lastKeepAliveSendTime,
+      @HiveField(5) DateTime lastHeartbeatReceiveTime,
+      @HiveField(6) List<Circuit> circuits});
 }
 
 /// @nodoc
@@ -183,32 +190,39 @@ class __$$DeviceImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$DeviceImpl implements _Device {
   const _$DeviceImpl(
-      {required this.id,
-      required this.name,
-      required this.state,
-      required this.desiredState,
-      required this.lastKeepAliveSendTime,
-      required this.lastHeartbeatReceiveTime,
-      required final List<Circuit> circuits})
+      {@HiveField(0) required this.id,
+      @HiveField(1) required this.name,
+      @HiveField(2) required this.state,
+      @HiveField(3) required this.desiredState,
+      @HiveField(4) required this.lastKeepAliveSendTime,
+      @HiveField(5) required this.lastHeartbeatReceiveTime,
+      @HiveField(6) required final List<Circuit> circuits})
       : _circuits = circuits;
 
   factory _$DeviceImpl.fromJson(Map<String, dynamic> json) =>
       _$$DeviceImplFromJson(json);
 
   @override
+  @HiveField(0)
   final int id;
   @override
+  @HiveField(1)
   final String name;
   @override
+  @HiveField(2)
   final DeviceState state;
   @override
+  @HiveField(3)
   final DeviceState desiredState;
   @override
+  @HiveField(4)
   final DateTime lastKeepAliveSendTime;
   @override
+  @HiveField(5)
   final DateTime lastHeartbeatReceiveTime;
   final List<Circuit> _circuits;
   @override
+  @HiveField(6)
   List<Circuit> get circuits {
     if (_circuits is EqualUnmodifiableListView) return _circuits;
     // ignore: implicit_dynamic_type
@@ -268,29 +282,36 @@ class _$DeviceImpl implements _Device {
 
 abstract class _Device implements Device {
   const factory _Device(
-      {required final int id,
-      required final String name,
-      required final DeviceState state,
-      required final DeviceState desiredState,
-      required final DateTime lastKeepAliveSendTime,
-      required final DateTime lastHeartbeatReceiveTime,
-      required final List<Circuit> circuits}) = _$DeviceImpl;
+      {@HiveField(0) required final int id,
+      @HiveField(1) required final String name,
+      @HiveField(2) required final DeviceState state,
+      @HiveField(3) required final DeviceState desiredState,
+      @HiveField(4) required final DateTime lastKeepAliveSendTime,
+      @HiveField(5) required final DateTime lastHeartbeatReceiveTime,
+      @HiveField(6) required final List<Circuit> circuits}) = _$DeviceImpl;
 
   factory _Device.fromJson(Map<String, dynamic> json) = _$DeviceImpl.fromJson;
 
   @override
+  @HiveField(0)
   int get id;
   @override
+  @HiveField(1)
   String get name;
   @override
+  @HiveField(2)
   DeviceState get state;
   @override
+  @HiveField(3)
   DeviceState get desiredState;
   @override
+  @HiveField(4)
   DateTime get lastKeepAliveSendTime;
   @override
+  @HiveField(5)
   DateTime get lastHeartbeatReceiveTime;
   @override
+  @HiveField(6)
   List<Circuit> get circuits;
 
   /// Create a copy of Device

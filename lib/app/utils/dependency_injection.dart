@@ -1,6 +1,6 @@
 import "package:flutter_secure_storage/flutter_secure_storage.dart";
 import "package:get_it/get_it.dart";
-import "package:hydrogarden_mobile/app/remote/client_provider.dart";
+import "package:hydrogarden_mobile/app/datasource/remote/client_provider.dart";
 import "package:hydrogarden_mobile/data/authentication/repositories/authentication_local_repository_impl.dart";
 import "package:hydrogarden_mobile/data/authentication/repositories/authentication_remote_repository_impl.dart";
 import "package:hydrogarden_mobile/data/authentication/repositories/authentication_repository_impl.dart";
@@ -9,7 +9,7 @@ import "package:hydrogarden_mobile/presentation/authentication/bloc/authenticati
 
 GetIt getIt = GetIt.instance;
 
-void setup() {
+void setupGetIt() {
   _setupClient();
   _setupRepository();
   _setupBloc();

@@ -1,29 +1,13 @@
+import "package:hydrogarden_mobile/data/device/mocks/mock_device.dart";
 import "package:hydrogarden_mobile/domain/device/models/device_state.dart";
-import "package:hydrogarden_mobile/domain/device/models/circuit.dart";
 import "package:hydrogarden_mobile/domain/device/models/device.dart";
-import "package:hydrogarden_mobile/domain/device/repositories/device_repository.dart";
+import "package:hydrogarden_mobile/domain/device/repositories/device_state_repository.dart";
 
-class DeviceRepositoryMock implements DeviceRepository {
+class DeviceStateRepositoryMock implements DeviceStateRepository {
   late Device _mockDevice;
 
-  DeviceRepositoryMock({Device? mockDevice}) {
-    _mockDevice = mockDevice ?? _defaultMockDevice();
-  }
-
-  static Device _defaultMockDevice() {
-    final now = DateTime.now();
-    return Device(
-      id: 1,
-      name: "Test Device",
-      state: DeviceState.alive,
-      desiredState: DeviceState.alive,
-      lastKeepAliveSendTime: now.subtract(const Duration(minutes: 2)),
-      lastHeartbeatReceiveTime: now.subtract(const Duration(minutes: 1)),
-      circuits: [
-        Circuit(id: 1, name: "Pomidorki", state: true, desiredState: true),
-        Circuit(id: 2, name: "Cebulka", state: false, desiredState: false),
-      ],
-    );
+  DeviceStateRepositoryMock({Device? mockDevice}) {
+    _mockDevice = mockDevice ?? defaultMockDevice();
   }
 
   @override

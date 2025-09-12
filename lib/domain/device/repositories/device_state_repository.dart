@@ -1,6 +1,6 @@
 import "package:hydrogarden_mobile/domain/device/models/device.dart";
 
-abstract class DeviceRepository {
+abstract class DeviceStateRepository {
   Future<Device> enableDevice(int deviceId);
 
   Future<Device> disableDevice(int deviceId);
