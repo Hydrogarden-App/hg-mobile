@@ -9,8 +9,8 @@ abstract final class AppPaddings {
 }
 
 abstract final class BlurConfig {
-  static const spread = 2.0;
-  static const radius = 10.0;
+  static const spread = 1.0;
+  static const radius = 5.0;
 }
 
 abstract final class CornerRoundingConfig {
