@@ -1,4 +1,4 @@
-// Openapi Generator last run: : 2025-09-10T17:02:40.980825
+// Openapi Generator last run: : 2025-09-12T16:01:42.957852
 import "package:flutter/material.dart";
 import "package:flutter_bloc/flutter_bloc.dart";
 import "package:go_router/go_router.dart";
