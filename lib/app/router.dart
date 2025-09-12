@@ -1,92 +1,89 @@
 part of "app.dart";
 
-final _rootNavigatorKey = GlobalKey<NavigatorState>();
+class AppRouter {
+  final AuthenticationBloc _authBloc;
 
-final StreamToListenable _authRefresh = StreamToListenable(
-  getIt<AuthenticationBloc>().stream,
-);
+  AppRouter(this._authBloc);
 
-final _router = GoRouter(
-  initialLocation: HomePage.route,
-  navigatorKey: _rootNavigatorKey,
-  routes: [
-    GoRoute(
-      path: HomePage.route,
-      pageBuilder: (context, state) {
-        return const NoTransitionPage(child: HomePage());
-      },
-    ),
-    GoRoute(
-      path: LoginPage.route,
-      pageBuilder: (context, state) {
-        return NoTransitionPage(child: const LoginPage());
-      },
-    ),
-    GoRoute(
-      path: RegisterPage.route,
-      pageBuilder: (context, state) {
-        return NoTransitionPage(child: const RegisterPage());
-      },
-    ),
-    GoRoute(
-      path: DeviceInfoPage.route,
-      pageBuilder: (context, state) {
-        return NoTransitionPage(child: const DeviceInfoPage());
-      },
-    ),
-    GoRoute(
-      path: CircuitListPage.route,
-      pageBuilder: (context, state) {
-        return NoTransitionPage(child: const CircuitListPage());
-      },
-    ),
-    GoRoute(
-      path: LogsPage.route,
-      pageBuilder: (context, state) {
-        return NoTransitionPage(child: const LogsPage());
-      },
-    ),
-    GoRoute(
-      path: SettingsPage.route,
-      pageBuilder: (context, state) {
-        return CustomTransitionPage(
-          child: const SettingsPage(),
-          transitionsBuilder: (context, animation, secondaryAnimation, child) {
-            const begin = Offset(0.0, -0.3);
-            const end = Offset.zero;
-            final tween = Tween(
-              begin: begin,
-              end: end,
-            ).chain(CurveTween(curve: Curves.easeInOut));
-            return SlideTransition(
-              position: animation.drive(tween),
-              child: child,
-            );
-          },
-        );
-      },
-    ),
-  ],
-  refreshListenable: _authRefresh,
-  redirect: (context, state) {
-    final loggedIn =
-        context.read<AuthenticationBloc>().state.status ==
-        AuthenticationStatus.authenticated;
-    final loggingIn =
-        state.matchedLocation == LoginPage.route ||
-        state.matchedLocation == RegisterPage.route;
-    if (!loggedIn && !loggingIn) {
-      return LoginPage.route;
-    }
+  final _rootNavigatorKey = GlobalKey<NavigatorState>();
 
-    if (loggedIn && loggingIn) {
-      return HomePage.route;
-    }
+  late final GoRouter router = GoRouter(
+    initialLocation: HomePage.route,
+    navigatorKey: _rootNavigatorKey,
+    refreshListenable: StreamToListenable(_authBloc.stream),
+    routes: [
+      GoRoute(
+        path: HomePage.route,
+        pageBuilder: (context, state) =>
+            const NoTransitionPage(child: HomePage()),
+      ),
+      GoRoute(
+        path: LoginPage.route,
+        pageBuilder: (context, state) =>
+            const NoTransitionPage(child: LoginPage()),
+      ),
+      GoRoute(
+        path: RegisterPage.route,
+        pageBuilder: (context, state) =>
+            const NoTransitionPage(child: RegisterPage()),
+      ),
+      GoRoute(
+        path: DeviceInfoPage.route,
+        pageBuilder: (context, state) =>
+            const NoTransitionPage(child: DeviceInfoPage()),
+      ),
+      GoRoute(
+        path: CircuitListPage.route,
+        pageBuilder: (context, state) =>
+            const NoTransitionPage(child: CircuitListPage()),
+      ),
+      GoRoute(
+        path: LogsPage.route,
+        pageBuilder: (context, state) =>
+            const NoTransitionPage(child: LogsPage()),
+      ),
+      GoRoute(
+        path: SettingsPage.route,
+        pageBuilder: (context, state) {
+          return CustomTransitionPage(
+            child: const SettingsPage(),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) {
+                  const begin = Offset(0.0, -0.3);
+                  const end = Offset.zero;
+                  final tween = Tween(
+                    begin: begin,
+                    end: end,
+                  ).chain(CurveTween(curve: Curves.easeInOut));
+                  return SlideTransition(
+                    position: animation.drive(tween),
+                    child: child,
+                  );
+                },
+          );
+        },
+      ),
+    ],
+    redirect: (context, state) {
+      final status = _authBloc.state.status;
+      final isLoggedIn = status == AuthenticationStatus.authenticated;
+      final isAuthRoute =
+          state.matchedLocation == LoginPage.route ||
+          state.matchedLocation == RegisterPage.route;
 
-    return null;
-  },
-);
+      if (!isLoggedIn && !isAuthRoute) {
+        return LoginPage.route;
+      }
 
-extension ContexRouterX on BuildContext {
+      if (isLoggedIn && isAuthRoute) {
+        return HomePage.route;
+      }
+
+      return null;
+    },
+  );
+}
+
+extension ContextRouterExtension on BuildContext {
   GoRouter get router => GoRouter.of(this);
 }

@@ -31,5 +31,10 @@ void _setupRepository() {
 }
 
 void _setupBloc() {
-  getIt.registerSingleton<AuthenticationBloc>(AuthenticationBloc());
+  getIt.registerSingleton<AuthenticationBloc>(
+    AuthenticationBloc(
+      authenticationRepository: getIt<AuthenticationRepository>(),
+      clientProvider: getIt<ClientProvider>(),
+    ),
+  );
 }

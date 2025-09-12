@@ -31,18 +31,16 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final authBloc = getIt<AuthenticationBloc>();
+
     return MultiBlocProvider(
-      providers: [
-        BlocProvider<AuthenticationBloc>.value(
-          value: getIt<AuthenticationBloc>(),
-        ),
-      ],
+      providers: [BlocProvider<AuthenticationBloc>.value(value: authBloc)],
       child: MaterialApp.router(
         title: "Hydrogarden Mobile",
         theme: AppTheme().light,
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
-        routerConfig: _router,
+        routerConfig: AppRouter(authBloc).router,
       ),
     );
   }

@@ -1,7 +1,6 @@
 import "package:equatable/equatable.dart";
 import "package:flutter_bloc/flutter_bloc.dart";
 
-import "package:hydrogarden_mobile/app/dependency_injection.dart";
 import "package:hydrogarden_mobile/app/remote/client_provider.dart";
 import "package:hydrogarden_mobile/domain/authentication/repositories/authentication_repository.dart";
 import "package:hydrogarden_mobile/domain/authentication/authentication_status.dart";
@@ -11,10 +10,15 @@ part "authentication_state.dart";
 
 class AuthenticationBloc
     extends Bloc<AuthenticationEvent, AuthenticationState> {
-  final AuthenticationRepository _authenticationRepository = getIt.get();
-  final ClientProvider _clientProvider = getIt.get();
+  final AuthenticationRepository _authenticationRepository;
+  final ClientProvider _clientProvider;
 
-  AuthenticationBloc() : super(const AuthenticationState.unknown()) {
+  AuthenticationBloc({
+    required AuthenticationRepository authenticationRepository,
+    required ClientProvider clientProvider,
+  }) : _authenticationRepository = authenticationRepository,
+       _clientProvider = clientProvider,
+       super(const AuthenticationState.unknown()) {
     on<AuthenticationCheckRequested>((event, emit) async {
       final token = await _authenticationRepository.getToken();
 
