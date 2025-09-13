@@ -1,13 +1,13 @@
 part of "home_bloc.dart";
 
 class HomeState extends Equatable {
-  final List<Device> devices;
+  final List<Device>? devices;
 
-  const HomeState._({this.devices = const []});
+  const HomeState._({this.devices});
 
-  const HomeState.disconnected(List<Device> devices) : this._(devices: devices);
+  const HomeState.loading() : this._();
 
-  const HomeState.connected(List<Device> devices) : this._(devices: devices);
+  const HomeState.loaded(List<Device> devices) : this._(devices: devices);
 
   @override
   List<Object?> get props => [devices];

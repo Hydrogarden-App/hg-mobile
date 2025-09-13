@@ -14,6 +14,7 @@ class AuthInterceptor extends Interceptor {
   }) : _token = token;
 
   void setToken(String? token) {
+    print("token update");
     _token = token;
   }
 

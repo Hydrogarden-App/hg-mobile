@@ -23,4 +23,9 @@ class DeviceInfoRepositoryRemoteImpl implements DeviceInfoRepository {
   Future<Device> updateDevice(Device device) {
     throw UnimplementedError();
   }
+
+  @override
+  Future<void> removeDevice(int id) async {
+    throw UnimplementedError();
+  }
 }

@@ -1,9 +1,13 @@
+import "package:connectivity_plus/connectivity_plus.dart";
 import "package:flutter_secure_storage/flutter_secure_storage.dart";
 import "package:get_it/get_it.dart";
 import "package:hydrogarden_mobile/app/datasource/remote/client_provider.dart";
 import "package:hydrogarden_mobile/data/authentication/repositories/authentication_local_repository_impl.dart";
 import "package:hydrogarden_mobile/data/authentication/repositories/authentication_remote_repository_impl.dart";
 import "package:hydrogarden_mobile/data/authentication/repositories/authentication_repository_impl.dart";
+import "package:hydrogarden_mobile/data/device/repositories/device_info_repository_local_impl.dart";
+import "package:hydrogarden_mobile/data/device/repositories/device_info_repository_remote_impl.dart";
+import "package:hydrogarden_mobile/data/device/repositories/mocks/device_info_repository_mock.dart";
 import "package:hydrogarden_mobile/domain/authentication/repositories/authentication_repository.dart";
 import "package:hydrogarden_mobile/presentation/authentication/bloc/authentication_bloc.dart";
 
@@ -17,6 +21,7 @@ void setupGetIt() {
 
 void _setupClient() {
   getIt.registerSingleton<ClientProvider>(ClientProvider());
+  getIt.registerSingleton<Connectivity>(Connectivity());
 }
 
 void _setupRepository() {
@@ -28,6 +33,15 @@ void _setupRepository() {
       ),
     ),
   );
+  getIt.registerSingleton<DeviceInfoRepositoryLocalImpl>(
+    DeviceInfoRepositoryLocalImpl(),
+  );
+  getIt.registerSingleton<DeviceInfoRepositoryRemoteImpl>(
+    DeviceInfoRepositoryRemoteImpl(
+      getIt.get<ClientProvider>().getAuthenticatedClient(),
+    ),
+  );
+  getIt.registerSingleton<DeviceInfoRepositoryMock>(DeviceInfoRepositoryMock());
 }
 
 void _setupBloc() {

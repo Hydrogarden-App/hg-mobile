@@ -34,4 +34,10 @@ class DeviceInfoRepositoryLocalImpl implements DeviceInfoRepository {
     await box.put(device.id, device);
     return device;
   }
+
+  @override
+  Future<void> removeDevice(int id) async {
+    final box = await _box;
+    await box.delete(id);
+  }
 }

@@ -1,5 +1,4 @@
 import "package:flutter/material.dart";
-import "package:flutter/widgets.dart";
 import "package:hydrogarden_mobile/app/l10n/l10n.dart";
 import "package:hydrogarden_mobile/app/theme/app_theme.dart";
 

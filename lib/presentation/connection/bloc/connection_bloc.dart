@@ -40,13 +40,10 @@ class ConnectionBloc extends Bloc<ConnectionEvent, ConnectionState> {
   final Connectivity _connectivity;
   late StreamSubscription<List<ConnectivityResult>> _connectivitySubscription;
 
-  ConnectionBloc({Connectivity? connectivity})
-    : _connectivity = connectivity ?? Connectivity(),
+  ConnectionBloc({required Connectivity connectivity})
+    : _connectivity = connectivity,
       super(
-        ConnectionState(
-          ConnectionStatus.disconnected,
-          ServerStatus.disconnected,
-        ),
+        ConnectionState(ConnectionStatus.connected, ServerStatus.connected),
       ) {
     on<ConnectionServerStatusUpdated>(_onServerStatusUpdated);
     on<ConnectionNetworkStatusChanged>(_onNetworkStatusChanged);
@@ -54,19 +51,21 @@ class ConnectionBloc extends Bloc<ConnectionEvent, ConnectionState> {
     _connectivitySubscription = _connectivity.onConnectivityChanged.listen((
       results,
     ) {
+      print("subscription told me to");
       add(
         ConnectionNetworkStatusChanged(_mapConnectivityResultToStatus(results)),
       );
     });
 
-    _init();
+    // _init();
   }
 
-  Future<void> _init() async {
-    final result = await _connectivity.checkConnectivity();
+  // Future<void> _init() async {
+  //   final result = await _connectivity.checkConnectivity();
+  //   print("Init result");
 
-    add(ConnectionNetworkStatusChanged(_mapConnectivityResultToStatus(result)));
-  }
+  //   add(ConnectionNetworkStatusChanged(_mapConnectivityResultToStatus(result)));
+  // }
 
   void _onServerStatusUpdated(
     ConnectionServerStatusUpdated event,
@@ -83,11 +82,13 @@ class ConnectionBloc extends Bloc<ConnectionEvent, ConnectionState> {
       );
     } else {
       emit(state.copyWith(serverStatus: ServerStatus.disconnected));
+      print("connection knows its discon");
 
-      _connectivity.checkConnectivity().then((result) {
-        final networkStatus = _mapConnectivityResultToStatus(result);
-        emit(state.copyWith(connectionStatus: networkStatus));
-      });
+      // _connectivity.checkConnectivity().then((result) {
+      //   final networkStatus = _mapConnectivityResultToStatus(result);
+      //   emit(state.copyWith(connectionStatus: networkStatus));
+      // });
+      print(state.serverStatus);
     }
   }
 
@@ -96,16 +97,9 @@ class ConnectionBloc extends Bloc<ConnectionEvent, ConnectionState> {
     Emitter<ConnectionState> emit,
   ) {
     final networkStatus = event.status;
-    if (networkStatus == ConnectionStatus.disconnected) {
-      emit(
-        state.copyWith(
-          serverStatus: ServerStatus.disconnected,
-          connectionStatus: ConnectionStatus.disconnected,
-        ),
-      );
-    } else {
-      emit(state.copyWith(connectionStatus: ConnectionStatus.connected));
-    }
+    print(networkStatus);
+
+    emit(state.copyWith(connectionStatus: networkStatus));
   }
 
   ConnectionStatus _mapConnectivityResultToStatus(
