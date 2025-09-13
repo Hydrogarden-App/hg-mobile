@@ -28,8 +28,11 @@ dependencies:
   hive_flutter: ^1.1.0
   path_provider: ^2.1.5
 
-  # api
+  # network
+  connectivity_plus: ^7.0.0
   dio: '^5.2.0'
+
+  # api
   openapi_generator_annotations: ^6.1.0
   hg_openapi:
     path: ../hg-openapi
