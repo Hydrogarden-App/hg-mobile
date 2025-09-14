@@ -1,21 +1,3 @@
-// part of "device_info_bloc.dart";
-
-// class DeviceInfoState extends Equatable {
-//   final Device? device;
-//   final String? error;
-
-//   const DeviceInfoState._({this.device, this.error});
-
-//   const DeviceInfoState.loading() : this._();
-
-//   const DeviceInfoState.error(String error) : this._(error: error);
-
-//   const DeviceInfoState.loaded(Device device) : this._(device: device);
-
-//   @override
-//   List<Object?> get props => [device, error];
-// }
-
 part of "device_info_bloc.dart";
 
 class DeviceInfoState extends Equatable {
