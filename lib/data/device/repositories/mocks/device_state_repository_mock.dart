@@ -11,11 +11,6 @@ class DeviceStateRepositoryMock implements DeviceStateRepository {
   }
 
   @override
-  Future<Device> getDeviceVitals(int deviceId) async {
-    return _mockDevice;
-  }
-
-  @override
   Future<Device> enableDevice(int deviceId) async {
     _mockDevice = _mockDevice.copyWith(
       desiredState: DeviceState.alive,

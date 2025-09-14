@@ -35,17 +35,24 @@ class AppRouter {
             child: DeviceInfoPage(deviceId: int.parse(deviceId)),
           );
         },
+        routes: [
+          GoRoute(
+            path: CircuitListPage.route,
+            pageBuilder: (context, state) {
+              final deviceId = int.parse(state.pathParameters["id"]!);
+              return NoTransitionPage(
+                child: CircuitListPage(deviceId: deviceId),
+              );
+            },
+          ),
+          GoRoute(
+            path: LogsPage.route,
+            pageBuilder: (context, state) =>
+                const NoTransitionPage(child: LogsPage()),
+          ),
+        ],
       ),
-      GoRoute(
-        path: CircuitListPage.route,
-        pageBuilder: (context, state) =>
-            const NoTransitionPage(child: CircuitListPage()),
-      ),
-      GoRoute(
-        path: LogsPage.route,
-        pageBuilder: (context, state) =>
-            const NoTransitionPage(child: LogsPage()),
-      ),
+
       GoRoute(
         path: SettingsPage.route,
         pageBuilder: (context, state) {

@@ -1,7 +1,9 @@
 import "package:flutter/material.dart";
+import "package:flutter_bloc/flutter_bloc.dart";
 import "package:hydrogarden_mobile/app/l10n/l10n.dart";
 import "package:hydrogarden_mobile/app/theme/app_theme.dart";
 import "package:hydrogarden_mobile/app/theme/ui_config.dart";
+import "package:hydrogarden_mobile/presentation/circuit_list/bloc/circuit_list_bloc.dart";
 import "package:hydrogarden_mobile/presentation/circuit_list/widgets/circuit_card.dart";
 import "package:hydrogarden_mobile/presentation/common/widgets/custom_app_bar.dart";
 
@@ -14,23 +16,42 @@ class CircuitListView extends StatelessWidget {
       backgroundColor: context.colorScheme.primary,
       appBar: CustomAppBar(),
       body: Center(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text(context.l10n.circuit_list_title),
-            SizedBox(height: AppPaddings.medium),
-            Expanded(
-              child: Padding(
-                padding: EdgeInsetsGeometry.all(AppPaddings.large),
-                child: SingleChildScrollView(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [CircuitCard()],
+        child: BlocConsumer<CircuitListBloc, CircuitListState>(
+          builder: (context, state) {
+            if (state.device != null) {
+              final device = state.device!;
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    context.l10n.circuit_list_title,
+                    style: context.textTheme.titleLarge,
                   ),
-                ),
-              ),
-            ),
-          ],
+                  SizedBox(height: AppPaddings.medium),
+                  Text(device.name, style: context.textTheme.titleMedium),
+                  Expanded(
+                    child: Padding(
+                      padding: EdgeInsetsGeometry.all(AppPaddings.large),
+                      child: SingleChildScrollView(
+                        child: ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: device.circuits.length,
+                          itemBuilder: (context, index) {
+                            return CircuitCard(
+                              name: device.circuits[index].name,
+                            );
+                          },
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              );
+            } else {
+              return CircularProgressIndicator();
+            }
+          },
+          listener: (context, state) {},
         ),
       ),
     );

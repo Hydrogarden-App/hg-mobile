@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import "package:go_router/go_router.dart";
 import "package:hydrogarden_mobile/app/app.dart";
 import "package:hydrogarden_mobile/app/l10n/l10n.dart";
 import "package:hydrogarden_mobile/app/theme/ui_config.dart";
@@ -19,7 +20,10 @@ class ActionCards extends StatelessWidget {
           title: context.l10n.device_info_circuit_info,
           icon: Icons.chevron_right,
           onTap: () {
-            context.router.push(CircuitListPage.route);
+            final currentLocation = GoRouter.of(context).state.matchedLocation;
+            print(currentLocation);
+            // context.push(CircuitListPage.route);
+            context.push("/device_info/1/circuit_list");
           },
         ),
         CardButton(
