@@ -1,3 +1,4 @@
+import "package:hydrogarden_mobile/data/device/extensions/dto_to_domain_extension.dart";
 import "package:hydrogarden_mobile/domain/device/models/device.dart";
 import "package:hydrogarden_mobile/domain/device/repositories/device_info_repository.dart";
 import "package:openapi/openapi.dart";
@@ -27,5 +28,12 @@ class DeviceInfoRepositoryRemoteImpl implements DeviceInfoRepository {
   @override
   Future<void> removeDevice(int id) async {
     throw UnimplementedError();
+  }
+
+  @override
+  Future<Device> getDeviceInfo(int deviceId) async {
+    final response = await _api.getDeviceVitals(deviceId: deviceId);
+    if (response.data != null) return response.data!.toDomain();
+    throw Exception();
   }
 }

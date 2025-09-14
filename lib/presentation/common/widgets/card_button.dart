@@ -20,7 +20,6 @@ class CardButton extends StatelessWidget {
       onTap: onTap,
       child: Container(
         height: SurfaceSizeConfig.heightLarge,
-        margin: const EdgeInsets.all(AppPaddings.medium),
         padding: const EdgeInsets.all(AppPaddings.large),
         decoration: BoxDecoration(
           color: context.colorScheme.primary,

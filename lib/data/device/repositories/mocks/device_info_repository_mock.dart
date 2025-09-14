@@ -19,13 +19,12 @@ class DeviceInfoRepositoryMock implements DeviceInfoRepository {
     await Future.delayed(delay);
 
     final count = 1 + _random.nextInt(4);
-    return List.generate(
-      count,
-      (index) =>
-          _mockDevice.copyWith(id: index, name: "${_mockDevice.name} $index"),
-    );
-    // print("dupdaudf");
-    // throw Exception();
+    // return List.generate(
+    //   count,
+    //   (index) =>
+    //       _mockDevice.copyWith(id: index, name: "${_mockDevice.name} $index"),
+    // );
+    throw Exception();
   }
 
   @override
@@ -40,4 +39,12 @@ class DeviceInfoRepositoryMock implements DeviceInfoRepository {
 
   @override
   Future<void> removeDevice(int id) async {}
+
+  @override
+  Future<Device> getDeviceInfo(int deviceId) async {
+    final delay = Duration(seconds: 1 + _random.nextInt(4));
+    await Future.delayed(delay);
+    // return _mockDevice;
+    throw Exception();
+  }
 }

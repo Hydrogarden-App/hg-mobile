@@ -28,9 +28,13 @@ class AppRouter {
             const NoTransitionPage(child: RegisterPage()),
       ),
       GoRoute(
-        path: DeviceInfoPage.route,
-        pageBuilder: (context, state) =>
-            const NoTransitionPage(child: DeviceInfoPage()),
+        path: "${DeviceInfoPage.route}/:id",
+        pageBuilder: (context, state) {
+          final deviceId = state.pathParameters["id"]!;
+          return NoTransitionPage(
+            child: DeviceInfoPage(deviceId: int.parse(deviceId)),
+          );
+        },
       ),
       GoRoute(
         path: CircuitListPage.route,

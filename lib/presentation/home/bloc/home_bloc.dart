@@ -19,14 +19,11 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   }) : super(const HomeState.loading()) {
     on<HomeDevicesRequested>((event, emit) async {
       emit(HomeState.loading());
-      print("waiting for load");
 
       final devices = await localDeviceInfoRepository.getDevices();
       emit(HomeState.loaded(devices));
-      print("loaded local devices ${devices.length}");
       try {
         final remoteDevices = await remoteDeviceInfoRepository.getDevices();
-        print("loaded remote devices ${remoteDevices.length}");
         emit(HomeState.loaded(remoteDevices));
         connectionBloc.add(
           ConnectionServerStatusUpdated(ServerStatus.connected),
@@ -47,12 +44,10 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
             await localDeviceInfoRepository.removeDevice(local.id);
           }
         }
-        print("updated local devices");
       } catch (_) {
         connectionBloc.add(
           ConnectionServerStatusUpdated(ServerStatus.disconnected),
         );
-        print("dupa");
       }
     });
   }

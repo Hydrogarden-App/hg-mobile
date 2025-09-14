@@ -1,5 +1,6 @@
 import "dart:async";
 
+import "package:equatable/equatable.dart";
 import "package:flutter_bloc/flutter_bloc.dart";
 import "package:connectivity_plus/connectivity_plus.dart";
 
@@ -7,11 +8,11 @@ enum ServerStatus { connected, disconnected }
 
 enum ConnectionStatus { connected, disconnected }
 
-class ConnectionState {
+class ConnectionState extends Equatable {
   final ConnectionStatus connectionStatus;
   final ServerStatus serverStatus;
 
-  ConnectionState(this.connectionStatus, this.serverStatus);
+  const ConnectionState(this.connectionStatus, this.serverStatus);
 
   ConnectionState copyWith({
     ConnectionStatus? connectionStatus,
@@ -22,6 +23,9 @@ class ConnectionState {
       serverStatus ?? this.serverStatus,
     );
   }
+
+  @override
+  List<Object?> get props => [connectionStatus, serverStatus];
 }
 
 abstract class ConnectionEvent {}
@@ -82,13 +86,6 @@ class ConnectionBloc extends Bloc<ConnectionEvent, ConnectionState> {
       );
     } else {
       emit(state.copyWith(serverStatus: ServerStatus.disconnected));
-      print("connection knows its discon");
-
-      // _connectivity.checkConnectivity().then((result) {
-      //   final networkStatus = _mapConnectivityResultToStatus(result);
-      //   emit(state.copyWith(connectionStatus: networkStatus));
-      // });
-      print(state.serverStatus);
     }
   }
 
@@ -97,7 +94,6 @@ class ConnectionBloc extends Bloc<ConnectionEvent, ConnectionState> {
     Emitter<ConnectionState> emit,
   ) {
     final networkStatus = event.status;
-    print(networkStatus);
 
     emit(state.copyWith(connectionStatus: networkStatus));
   }

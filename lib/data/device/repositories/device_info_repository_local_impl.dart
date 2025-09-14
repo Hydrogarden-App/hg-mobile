@@ -40,4 +40,14 @@ class DeviceInfoRepositoryLocalImpl implements DeviceInfoRepository {
     final box = await _box;
     await box.delete(id);
   }
+
+  @override
+  Future<Device> getDeviceInfo(int deviceId) async {
+    final box = await _box;
+    final device = box.get(deviceId);
+    if (device == null) {
+      throw Exception("Device with id $deviceId not found");
+    }
+    return device;
+  }
 }

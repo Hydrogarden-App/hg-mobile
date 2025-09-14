@@ -17,23 +17,21 @@ class DeviceStateRepositoryMock implements DeviceStateRepository {
 
   @override
   Future<Device> enableDevice(int deviceId) async {
-    if (_mockDevice.id == deviceId) {
-      _mockDevice = _mockDevice.copyWith(
-        desiredState: DeviceState.alive,
-        state: DeviceState.alive,
-      );
-    }
+    _mockDevice = _mockDevice.copyWith(
+      desiredState: DeviceState.alive,
+      state: DeviceState.alive,
+    );
+
     return _mockDevice;
   }
 
   @override
   Future<Device> disableDevice(int deviceId) async {
-    if (_mockDevice.id == deviceId) {
-      _mockDevice = _mockDevice.copyWith(
-        desiredState: DeviceState.dead,
-        state: DeviceState.dead,
-      );
-    }
+    _mockDevice = _mockDevice.copyWith(
+      desiredState: DeviceState.dead,
+      state: DeviceState.dead,
+    );
+
     return _mockDevice;
   }
 

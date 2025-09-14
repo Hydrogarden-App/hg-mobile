@@ -8,6 +8,4 @@ abstract class DeviceStateRepository {
   Future<Device> enableCircuit(int deviceId, int circuitId);
 
   Future<Device> disableCircuit(int deviceId, int circuitId);
-
-  Future<Device> getDeviceVitals(int deviceId);
 }

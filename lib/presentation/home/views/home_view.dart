@@ -18,7 +18,8 @@ class HomeView extends StatelessWidget {
     return Scaffold(
       backgroundColor: context.colorScheme.primary,
       appBar: CustomAppBar(hasBackButton: false),
-      body: Center(
+      body: Padding(
+        padding: EdgeInsetsGeometry.all(AppPaddings.large),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -28,15 +29,33 @@ class HomeView extends StatelessWidget {
               context.l10n.home_subtitle,
               style: context.textTheme.titleMedium,
             ),
-            BlocBuilder<ConnectionBloc, ConnectionState>(
+            SizedBox(height: AppPaddings.large),
+            BlocConsumer<ConnectionBloc, ConnectionState>(
               builder: (context, state) {
                 if (state.connectionStatus == ConnectionStatus.disconnected) {
-                  return Text("Please turn on wifi");
+                  return Text(
+                    context.l10n.home_error_network,
+                    style: context.textTheme.bodySmall?.copyWith(
+                      color: context.colorScheme.error,
+                    ),
+                  );
                 } else if (state.serverStatus == ServerStatus.disconnected) {
-                  return Text("Can't conenct to server. not your fault");
+                  return Text(
+                    context.l10n.home_error_server,
+                    style: context.textTheme.bodySmall?.copyWith(
+                      color: context.colorScheme.error,
+                    ),
+                  );
                 } else {
                   return SizedBox.shrink();
                 }
+              },
+              listenWhen: (previous, current) {
+                return previous != current &&
+                    current.serverStatus == ServerStatus.connected;
+              },
+              listener: (context, state) {
+                context.read<HomeBloc>().add(HomeDevicesRequested());
               },
             ),
             SizedBox(height: AppPaddings.large),
@@ -52,7 +71,9 @@ class HomeView extends StatelessWidget {
                           title: device.name,
                           icon: Icons.chevron_right,
                           onTap: () {
-                            context.router.push(DeviceInfoPage.route);
+                            context.router.push(
+                              "${DeviceInfoPage.route}/${device.id}",
+                            );
                           },
                         );
                       },

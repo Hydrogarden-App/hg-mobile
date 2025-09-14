@@ -21,9 +21,14 @@
     "device_info_circuit_info": "Szczegóły obwodów",
     "device_info_watering_schedule": "Harmonogram podlewania",
     "device_info_see_logs": "Zobacz logi",
+    "device_info_device_state": "Stan urządzenia",
+    "device_info_on": "Włączony",
+    "device_info_off": "Wyłączony",
 
     "home_title": "Hydrogarden",
     "home_subtitle": "Twoje urządzenia",
+    "home_error_server": "Brak połączenia z serwerem. Wyświetlane są ostatnio zapisane informacje.",
+    "home_error_network": "Brak połączenia z siecią, włącz dane komórkowe lub wifi.",
 
     "logs_title": "Logi urządzenia",
 

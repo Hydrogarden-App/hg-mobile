@@ -42,11 +42,4 @@ class DeviceStateRepositoryRemoteImpl implements DeviceStateRepository {
     if (response.data != null) return response.data!.toDomain();
     throw Exception();
   }
-
-  @override
-  Future<Device> getDeviceVitals(int deviceId) async {
-    final response = await _api.getDeviceVitals(deviceId: deviceId);
-    if (response.data != null) return response.data!.toDomain();
-    throw Exception();
-  }
 }
