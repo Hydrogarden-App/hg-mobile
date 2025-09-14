@@ -1,4 +1,4 @@
-// Openapi Generator last run: : 2025-09-13T13:45:16.693306
+// Openapi Generator last run: : 2025-09-14T20:24:32.489612
 import "package:connectivity_plus/connectivity_plus.dart";
 import "package:flutter/material.dart";
 import "package:flutter_bloc/flutter_bloc.dart";
