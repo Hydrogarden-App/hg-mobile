@@ -51,7 +51,7 @@ class DeviceInfoBloc extends Bloc<DeviceInfoEvent, DeviceInfoState> {
     } catch (_) {
       emit(
         state.copyWith(
-          error: "pppNie udało się pobrać danych z serwera",
+          error: "Nie udało się pobrać danych z serwera",
           isLoading: false,
         ),
       );

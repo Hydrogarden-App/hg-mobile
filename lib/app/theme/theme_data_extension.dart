@@ -42,6 +42,7 @@ extension ThemeDataExtension on AppTheme {
   );
 
   InputDecorationTheme get inputDecorationTheme => InputDecorationTheme(
+    hintStyle: TextStyle(color: ColorConsts.medium),
     border: UnderlineInputBorder(
       borderSide: BorderSide(color: ColorConsts.dark, width: 1),
     ),
@@ -80,5 +81,14 @@ extension ThemeDataExtension on AppTheme {
           : ColorConsts.pale;
     }),
     trackOutlineColor: WidgetStateProperty.all(ColorConsts.dark),
+  );
+
+  DialogThemeData get dialogTheme => DialogThemeData(
+    backgroundColor: ColorConsts.pale,
+    titleTextStyle: TextStyle(
+      fontSize: 24,
+      fontWeight: FontWeight.w300,
+      color: ColorConsts.dark,
+    ),
   );
 }
