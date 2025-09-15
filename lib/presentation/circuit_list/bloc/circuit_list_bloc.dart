@@ -103,16 +103,22 @@ class CircuitListBloc extends Bloc<CircuitListEvent, CircuitListState> {
   ) async {
     final device = state.device?.copyWith();
     if (device == null) return;
+    final circuits = device.circuits;
     final idToUpdate = device.circuits.indexWhere(
       (circuit) => circuit.id == event.id,
     );
     if (idToUpdate < 0) return;
 
-    device.circuits[idToUpdate] = device.circuits[idToUpdate].copyWith(
+    final updatedCircuits = List<Circuit>.from(circuits);
+    updatedCircuits[idToUpdate] = circuits[idToUpdate].copyWith(
       name: event.name,
     );
+
+    final updatedDevice = device.copyWith(circuits: updatedCircuits);
     try {
-      final result = await remoteDeviceInfoRepository.updateDevice(device);
+      final result = await remoteDeviceInfoRepository.updateDevice(
+        updatedDevice,
+      );
       await localDeviceInfoRepository.updateDevice(result);
       emit(state.copyWith(device: result, error: null));
     } catch (_) {

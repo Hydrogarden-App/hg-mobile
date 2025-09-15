@@ -26,6 +26,7 @@ class AppTheme implements AppThemeData {
     iconTheme: iconTheme,
     switchTheme: switchTheme,
     dialogTheme: dialogTheme,
+    popupMenuTheme: popupMenuTheme,
   );
 }
 

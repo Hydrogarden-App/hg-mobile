@@ -11,8 +11,9 @@ import "package:hydrogarden_mobile/presentation/device_info/device_info_page.dar
 import "package:hydrogarden_mobile/presentation/home/bloc/home_bloc.dart";
 
 class HomeView extends StatelessWidget {
-  const HomeView({super.key});
+  const HomeView({super.key, required this.navigateToDevice});
 
+  final void Function(int id) navigateToDevice;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -71,9 +72,7 @@ class HomeView extends StatelessWidget {
                           title: device.name,
                           icon: Icons.chevron_right,
                           onTap: () {
-                            context.router.push(
-                              "${DeviceInfoPage.route}/${device.id}",
-                            );
+                            navigateToDevice(device.id);
                           },
                         );
                       },

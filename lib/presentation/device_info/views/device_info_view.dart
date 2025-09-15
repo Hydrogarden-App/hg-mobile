@@ -1,9 +1,12 @@
 import "package:flutter/material.dart" hide ConnectionState;
 import "package:flutter_bloc/flutter_bloc.dart";
+import "package:go_router/go_router.dart";
+import "package:hydrogarden_mobile/app/app.dart";
 
 import "package:hydrogarden_mobile/app/l10n/l10n.dart";
 import "package:hydrogarden_mobile/app/theme/app_theme.dart";
 import "package:hydrogarden_mobile/app/theme/ui_config.dart";
+import "package:hydrogarden_mobile/presentation/circuit_list/circuit_list_page.dart";
 import "package:hydrogarden_mobile/presentation/common/extensions/edit_modal_extension.dart";
 import "package:hydrogarden_mobile/presentation/common/extensions/snack_bar_extension.dart";
 import "package:hydrogarden_mobile/presentation/common/widgets/custom_app_bar.dart";
@@ -95,7 +98,18 @@ class DeviceInfoView extends StatelessWidget {
                     ),
 
                   SizedBox(height: AppPaddings.large),
-                  Expanded(child: SingleChildScrollView(child: ActionCards())),
+                  Expanded(
+                    child: SingleChildScrollView(
+                      child: ActionCards(
+                        onTap: () {
+                          context.router.pushNamed(
+                            CircuitListPage.route,
+                            pathParameters: {"id": device.id.toString()},
+                          );
+                        },
+                      ),
+                    ),
+                  ),
                 ],
               );
             } else {

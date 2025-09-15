@@ -1,30 +1,15 @@
 import "package:flutter/material.dart";
 import "package:hydrogarden_mobile/app/theme/app_theme.dart";
 import "package:hydrogarden_mobile/app/theme/color_consts.dart";
+import "package:hydrogarden_mobile/app/theme/text_consts.dart";
 import "package:hydrogarden_mobile/app/theme/ui_config.dart";
 
 extension ThemeDataExtension on AppTheme {
   TextTheme get textTheme => TextTheme(
-    titleLarge: TextStyle(
-      fontSize: 40,
-      fontWeight: FontWeight.w600,
-      color: ColorConsts.dark,
-    ),
-    titleMedium: TextStyle(
-      fontSize: 24,
-      fontWeight: FontWeight.w300,
-      color: ColorConsts.dark,
-    ),
-    bodyMedium: TextStyle(
-      fontSize: 16,
-      fontWeight: FontWeight.w400,
-      color: ColorConsts.dark,
-    ),
-    bodySmall: TextStyle(
-      fontSize: 14,
-      fontWeight: FontWeight.w400,
-      color: ColorConsts.dark,
-    ),
+    titleLarge: TextConsts.title,
+    titleMedium: TextConsts.subtitle,
+    bodyMedium: TextConsts.normal,
+    bodySmall: TextConsts.hint,
   );
 
   OutlinedButtonThemeData get outlinedButtonTheme => OutlinedButtonThemeData(
@@ -37,7 +22,7 @@ extension ThemeDataExtension on AppTheme {
         vertical: AppPaddings.small,
         horizontal: AppPaddings.huge,
       ),
-      textStyle: const TextStyle(fontWeight: FontWeight.w400, fontSize: 16),
+      textStyle: TextConsts.normal,
     ),
   );
 
@@ -47,12 +32,8 @@ extension ThemeDataExtension on AppTheme {
       borderSide: BorderSide(color: ColorConsts.dark, width: 1),
     ),
     suffixIconColor: ColorConsts.dark,
-    labelStyle: TextStyle(
-      fontSize: 16,
-      color: ColorConsts.dark,
-      fontWeight: FontWeight.w500,
-    ),
-    floatingLabelStyle: TextStyle(fontSize: 14, color: ColorConsts.medium),
+    labelStyle: TextConsts.normal,
+    floatingLabelStyle: TextConsts.hint.copyWith(color: ColorConsts.medium),
     contentPadding: EdgeInsets.symmetric(
       vertical: AppPaddings.small,
       horizontal: AppPaddings.large,
@@ -85,10 +66,16 @@ extension ThemeDataExtension on AppTheme {
 
   DialogThemeData get dialogTheme => DialogThemeData(
     backgroundColor: ColorConsts.pale,
-    titleTextStyle: TextStyle(
-      fontSize: 24,
-      fontWeight: FontWeight.w300,
-      color: ColorConsts.dark,
+    titleTextStyle: TextConsts.subtitle,
+  );
+
+  PopupMenuThemeData get popupMenuTheme => PopupMenuThemeData(
+    elevation: 12,
+    color: ColorConsts.pale,
+    shape: RoundedRectangleBorder(
+      side: BorderSide(color: ColorConsts.shadow),
+      borderRadius: BorderRadius.circular(20),
     ),
+    shadowColor: ColorConsts.shadow,
   );
 }

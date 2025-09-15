@@ -13,9 +13,40 @@ class AppRouter {
     refreshListenable: StreamToListenable(_authBloc.stream),
     routes: [
       GoRoute(
+        name: "home",
         path: HomePage.route,
         pageBuilder: (context, state) =>
             const NoTransitionPage(child: HomePage()),
+        routes: [
+          GoRoute(
+            name: DeviceInfoPage.route,
+            path: "${DeviceInfoPage.route}/:id",
+            pageBuilder: (context, state) {
+              final deviceId = state.pathParameters["id"]!;
+              return NoTransitionPage(
+                child: DeviceInfoPage(deviceId: int.parse(deviceId)),
+              );
+            },
+            routes: [
+              GoRoute(
+                name: CircuitListPage.route,
+                path: CircuitListPage.route,
+                pageBuilder: (context, state) {
+                  final deviceId = int.parse(state.pathParameters["id"]!);
+                  return NoTransitionPage(
+                    child: CircuitListPage(deviceId: deviceId),
+                  );
+                },
+              ),
+              GoRoute(
+                name: LogsPage.route,
+                path: LogsPage.route,
+                pageBuilder: (context, state) =>
+                    const NoTransitionPage(child: LogsPage()),
+              ),
+            ],
+          ),
+        ],
       ),
       GoRoute(
         path: LoginPage.route,
@@ -26,31 +57,6 @@ class AppRouter {
         path: RegisterPage.route,
         pageBuilder: (context, state) =>
             const NoTransitionPage(child: RegisterPage()),
-      ),
-      GoRoute(
-        path: "${DeviceInfoPage.route}/:id",
-        pageBuilder: (context, state) {
-          final deviceId = state.pathParameters["id"]!;
-          return NoTransitionPage(
-            child: DeviceInfoPage(deviceId: int.parse(deviceId)),
-          );
-        },
-        routes: [
-          GoRoute(
-            path: CircuitListPage.route,
-            pageBuilder: (context, state) {
-              final deviceId = int.parse(state.pathParameters["id"]!);
-              return NoTransitionPage(
-                child: CircuitListPage(deviceId: deviceId),
-              );
-            },
-          ),
-          GoRoute(
-            path: LogsPage.route,
-            pageBuilder: (context, state) =>
-                const NoTransitionPage(child: LogsPage()),
-          ),
-        ],
       ),
 
       GoRoute(

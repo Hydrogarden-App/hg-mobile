@@ -38,7 +38,21 @@ class CircuitListView extends StatelessWidget {
                           itemCount: device.circuits.length,
                           itemBuilder: (context, index) {
                             return CircuitCard(
+                              id: index,
                               name: device.circuits[index].name,
+                              onToggle: (value) {
+                                context.read<CircuitListBloc>().add(
+                                  value
+                                      ? CircuitListTurnOnRequested(
+                                          device.id,
+                                          device.circuits[index].id,
+                                        )
+                                      : CircuitListTurnOffRequested(
+                                          device.id,
+                                          device.circuits[index].id,
+                                        ),
+                                );
+                              },
                             );
                           },
                         ),

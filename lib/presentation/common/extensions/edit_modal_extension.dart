@@ -18,6 +18,7 @@ extension CustomModalExtension on BuildContext {
           backgroundColor: context.colorScheme.primary,
           title: Text(titleText),
           content: TextField(
+            style: context.textTheme.bodyMedium,
             cursorColor: context.colorScheme.secondary,
             controller: controller,
             decoration: InputDecoration(

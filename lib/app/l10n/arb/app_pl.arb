@@ -16,6 +16,9 @@
     "auth_subtitle": "Twój asystent podlewania",
     "auth_title": "Hydrogarden",
 
+    "circuit_list_card_action_add_single_watering": "Dodaj pojedyńcze podlewanie",
+    "circuit_list_card_action_rename": "Zmień nazwę",
+    "circuit_list_card_action_see_schedule": "Harmonogram",
     "circuit_list_title": "Szczegóły obwodów",
 
     "common_cancel": "Anuluj",

@@ -1,14 +1,13 @@
 import "package:flutter/material.dart";
-import "package:go_router/go_router.dart";
 import "package:hydrogarden_mobile/app/app.dart";
 import "package:hydrogarden_mobile/app/l10n/l10n.dart";
 import "package:hydrogarden_mobile/app/theme/ui_config.dart";
-import "package:hydrogarden_mobile/presentation/circuit_list/circuit_list_page.dart";
 import "package:hydrogarden_mobile/presentation/common/widgets/card_button.dart";
 import "package:hydrogarden_mobile/presentation/logs/logs_page.dart";
 
 class ActionCards extends StatelessWidget {
-  const ActionCards({super.key});
+  const ActionCards({super.key, required this.onTap});
+  final void Function() onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -19,12 +18,7 @@ class ActionCards extends StatelessWidget {
         CardButton(
           title: context.l10n.device_info_circuit_info,
           icon: Icons.chevron_right,
-          onTap: () {
-            final currentLocation = GoRouter.of(context).state.matchedLocation;
-            print(currentLocation);
-            // context.push(CircuitListPage.route);
-            context.push("/device_info/1/circuit_list");
-          },
+          onTap: onTap,
         ),
         CardButton(
           title: context.l10n.device_info_watering_schedule,

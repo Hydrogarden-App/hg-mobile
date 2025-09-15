@@ -12,7 +12,7 @@ class DeviceInfoPage extends StatelessWidget {
   final int deviceId;
   const DeviceInfoPage({super.key, required this.deviceId});
 
-  static const route = "/device_info";
+  static const route = "device_info";
 
   @override
   Widget build(BuildContext context) {

@@ -14,6 +14,7 @@ dependencies:
   # ui
   cupertino_icons: ^1.0.8
   reactive_forms: ^18.1.1
+  flutter_switch: ^0.3.2
 
   #state
   flutter_bloc: ^9.1.1
