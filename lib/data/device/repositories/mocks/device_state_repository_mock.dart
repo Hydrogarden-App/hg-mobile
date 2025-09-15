@@ -13,6 +13,7 @@ class DeviceStateRepositoryMock implements DeviceStateRepository {
   @override
   Future<Device> enableDevice(int deviceId) async {
     _mockDevice = _mockDevice.copyWith(
+      id: deviceId,
       desiredState: DeviceState.alive,
       state: DeviceState.alive,
     );
@@ -23,6 +24,7 @@ class DeviceStateRepositoryMock implements DeviceStateRepository {
   @override
   Future<Device> disableDevice(int deviceId) async {
     _mockDevice = _mockDevice.copyWith(
+      id: deviceId,
       desiredState: DeviceState.dead,
       state: DeviceState.dead,
     );
@@ -32,31 +34,29 @@ class DeviceStateRepositoryMock implements DeviceStateRepository {
 
   @override
   Future<Device> enableCircuit(int deviceId, int circuitId) async {
-    if (_mockDevice.id == deviceId) {
-      final updatedCircuits = _mockDevice.circuits.map((circuit) {
-        if (circuit.id == circuitId) {
-          return circuit.copyWith(desiredState: true, state: true);
-        }
-        return circuit;
-      }).toList();
+    final updatedCircuits = _mockDevice.circuits.map((circuit) {
+      if (circuit.id == circuitId) {
+        return circuit.copyWith(desiredState: true, state: true);
+      }
+      return circuit;
+    }).toList();
 
-      _mockDevice = _mockDevice.copyWith(circuits: updatedCircuits);
-    }
+    _mockDevice = _mockDevice.copyWith(id: deviceId, circuits: updatedCircuits);
+
     return _mockDevice;
   }
 
   @override
   Future<Device> disableCircuit(int deviceId, int circuitId) async {
-    if (_mockDevice.id == deviceId) {
-      final updatedCircuits = _mockDevice.circuits.map((circuit) {
-        if (circuit.id == circuitId) {
-          return circuit.copyWith(desiredState: false, state: false);
-        }
-        return circuit;
-      }).toList();
+    final updatedCircuits = _mockDevice.circuits.map((circuit) {
+      if (circuit.id == circuitId) {
+        return circuit.copyWith(desiredState: false, state: false);
+      }
+      return circuit;
+    }).toList();
 
-      _mockDevice = _mockDevice.copyWith(circuits: updatedCircuits);
-    }
+    _mockDevice = _mockDevice.copyWith(id: deviceId, circuits: updatedCircuits);
+
     return _mockDevice;
   }
 }

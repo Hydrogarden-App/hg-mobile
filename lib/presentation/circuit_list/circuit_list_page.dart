@@ -23,7 +23,7 @@ class CircuitListPage extends StatelessWidget {
         deviceStateRepository: getIt<DeviceStateRepositoryMock>(),
         connectionBloc: context.read<ConnectionBloc>(),
       )..add(CircuitListDataRequested(deviceId)),
-      child: CircuitListView(),
+      child: CircuitListView(deviceId: deviceId),
     );
   }
 }

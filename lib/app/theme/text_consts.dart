@@ -8,7 +8,7 @@ abstract final class TextConsts {
     color: ColorConsts.dark,
   );
   static const subtitle = TextStyle(
-    fontSize: 24,
+    fontSize: 22,
     fontWeight: FontWeight.w300,
     color: ColorConsts.dark,
   );

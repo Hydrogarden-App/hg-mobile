@@ -22,6 +22,8 @@
     "circuit_list_title": "Szczegóły obwodów",
 
     "common_cancel": "Anuluj",
+    "common_error_network": "Brak połączenia z siecią, włącz dane komórkowe lub wifi.",
+    "common_error_server": "Brak połączenia z serwerem. Wyświetlane są ostatnio zapisane informacje.",
     "common_save": "Zapisz",
 
     "device_info_circuit_info": "Szczegóły obwodów",
@@ -33,8 +35,6 @@
     "device_info_see_logs": "Zobacz logi",
     "device_info_watering_schedule": "Harmonogram podlewania",
 
-    "home_error_network": "Brak połączenia z siecią, włącz dane komórkowe lub wifi.",
-    "home_error_server": "Brak połączenia z serwerem. Wyświetlane są ostatnio zapisane informacje.",
     "home_subtitle": "Twoje urządzenia",
     "home_title": "Hydrogarden",
 

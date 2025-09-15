@@ -1,3 +1,4 @@
+// common across all views
 abstract final class AppPaddings {
   static const gigantic = 46.0;
   static const enormous = 32.0;
@@ -26,5 +27,11 @@ abstract final class SurfaceSizeConfig {
 abstract final class IconSizeConfig {
   static const small = 20.0;
   static const medium = 35.0;
-  static const large = 60.0;
+  static const large = 55.0;
+}
+
+// specific to a view
+
+abstract final class DeviceInfoViewConfig {
+  static const onOffSectionPlaceholderHeight = 95.0;
 }

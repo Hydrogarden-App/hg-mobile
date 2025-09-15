@@ -5,10 +5,10 @@ import "package:hydrogarden_mobile/app/theme/ui_config.dart";
 import "package:hydrogarden_mobile/presentation/settings/settings_page.dart";
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
-  final VoidCallback? onBack;
+  final VoidCallback? onSettings;
   final bool hasBackButton;
 
-  const CustomAppBar({super.key, this.onBack, this.hasBackButton = true});
+  const CustomAppBar({super.key, this.onSettings, this.hasBackButton = true});
 
   @override
   Widget build(BuildContext context) {
@@ -16,13 +16,14 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       leading: hasBackButton
           ? IconButton(
               icon: Icon(Icons.chevron_left, size: IconSizeConfig.medium),
-              onPressed: () =>
-                  (onBack != null) ? onBack!() : context.router.pop(),
+              onPressed: () => context.router.pop(),
             )
           : null,
       actions: [
         IconButton(
-          onPressed: () => context.router.push(SettingsPage.route),
+          onPressed: (onSettings != null)
+              ? onSettings
+              : () => context.router.push(SettingsPage.route),
           icon: Icon(Icons.settings, size: IconSizeConfig.medium),
         ),
       ],

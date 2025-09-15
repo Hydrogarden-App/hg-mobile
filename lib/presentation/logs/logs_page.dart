@@ -4,7 +4,7 @@ import "package:hydrogarden_mobile/presentation/logs/views/logs_view.dart";
 class LogsPage extends StatelessWidget {
   const LogsPage({super.key});
 
-  static const route = "/logs";
+  static const route = "logs";
 
   @override
   Widget build(BuildContext context) {

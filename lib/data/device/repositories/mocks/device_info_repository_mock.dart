@@ -15,10 +15,10 @@ class DeviceInfoRepositoryMock implements DeviceInfoRepository {
 
   @override
   Future<List<Device>> getDevices() async {
-    final delay = Duration(seconds: 1 + _random.nextInt(4));
+    final delay = Duration(milliseconds: 100 + _random.nextInt(2000));
     await Future.delayed(delay);
 
-    final count = 1 + _random.nextInt(4);
+    final count = 1 + _random.nextInt(10);
     return List.generate(
       count,
       (index) =>
@@ -42,9 +42,9 @@ class DeviceInfoRepositoryMock implements DeviceInfoRepository {
 
   @override
   Future<Device> getDeviceInfo(int deviceId) async {
-    final delay = Duration(seconds: 1 + _random.nextInt(4));
+    final delay = Duration(milliseconds: 100 + _random.nextInt(2000));
     await Future.delayed(delay);
-    return _mockDevice;
+    return _mockDevice.copyWith(id: deviceId);
     // throw Exception();
   }
 }

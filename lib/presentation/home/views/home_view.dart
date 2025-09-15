@@ -1,13 +1,9 @@
 import "package:flutter/material.dart" hide ConnectionState;
 import "package:flutter_bloc/flutter_bloc.dart";
-import "package:hydrogarden_mobile/app/app.dart";
 import "package:hydrogarden_mobile/app/l10n/l10n.dart";
-import "package:hydrogarden_mobile/app/theme/app_theme.dart";
 import "package:hydrogarden_mobile/app/theme/ui_config.dart";
+import "package:hydrogarden_mobile/presentation/common/widgets/app_frame.dart";
 import "package:hydrogarden_mobile/presentation/common/widgets/card_button.dart";
-import "package:hydrogarden_mobile/presentation/common/widgets/custom_app_bar.dart";
-import "package:hydrogarden_mobile/presentation/connection/bloc/connection_bloc.dart";
-import "package:hydrogarden_mobile/presentation/device_info/device_info_page.dart";
 import "package:hydrogarden_mobile/presentation/home/bloc/home_bloc.dart";
 
 class HomeView extends StatelessWidget {
@@ -16,76 +12,39 @@ class HomeView extends StatelessWidget {
   final void Function(int id) navigateToDevice;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: context.colorScheme.primary,
-      appBar: CustomAppBar(hasBackButton: false),
-      body: Padding(
-        padding: EdgeInsetsGeometry.all(AppPaddings.large),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text(context.l10n.home_title, style: context.textTheme.titleLarge),
-            SizedBox(height: AppPaddings.medium),
-            Text(
-              context.l10n.home_subtitle,
-              style: context.textTheme.titleMedium,
-            ),
-            SizedBox(height: AppPaddings.large),
-            BlocConsumer<ConnectionBloc, ConnectionState>(
-              builder: (context, state) {
-                if (state.connectionStatus == ConnectionStatus.disconnected) {
-                  return Text(
-                    context.l10n.home_error_network,
-                    style: context.textTheme.bodySmall?.copyWith(
-                      color: context.colorScheme.error,
-                    ),
-                  );
-                } else if (state.serverStatus == ServerStatus.disconnected) {
-                  return Text(
-                    context.l10n.home_error_server,
-                    style: context.textTheme.bodySmall?.copyWith(
-                      color: context.colorScheme.error,
-                    ),
-                  );
-                } else {
-                  return SizedBox.shrink();
-                }
-              },
-              listenWhen: (previous, current) {
-                return previous != current &&
-                    current.serverStatus == ServerStatus.connected;
-              },
-              listener: (context, state) {
-                context.read<HomeBloc>().add(HomeDevicesRequested());
-              },
-            ),
-            SizedBox(height: AppPaddings.large),
-            Expanded(
-              child: BlocBuilder<HomeBloc, HomeState>(
-                builder: (context, state) {
-                  if (state.devices != null) {
-                    return ListView.builder(
-                      itemCount: state.devices!.length,
-                      itemBuilder: (context, index) {
-                        final device = state.devices![index];
-                        return CardButton(
-                          title: device.name,
-                          icon: Icons.chevron_right,
-                          onTap: () {
-                            navigateToDevice(device.id);
-                          },
-                        );
-                      },
+    return AppFrame(
+      title: context.l10n.home_title,
+      subtitle: context.l10n.home_subtitle,
+      hasBackButton: false,
+      children: [
+        Expanded(
+          child: BlocBuilder<HomeBloc, HomeState>(
+            builder: (context, state) {
+              if (state.devices != null) {
+                return ListView.builder(
+                  itemCount: state.devices!.length,
+                  padding: EdgeInsets.all(AppPaddings.small),
+                  itemBuilder: (context, index) {
+                    final device = state.devices![index];
+                    return Container(
+                      margin: EdgeInsets.only(bottom: AppPaddings.medium),
+                      child: CardButton(
+                        title: device.name,
+                        icon: Icons.chevron_right,
+                        onTap: () {
+                          navigateToDevice(device.id);
+                        },
+                      ),
                     );
-                  } else {
-                    return const CircularProgressIndicator();
-                  }
-                },
-              ),
-            ),
-          ],
+                  },
+                );
+              } else {
+                return const CircularProgressIndicator();
+              }
+            },
+          ),
         ),
-      ),
+      ],
     );
   }
 }
