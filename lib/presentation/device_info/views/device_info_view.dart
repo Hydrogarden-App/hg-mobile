@@ -46,7 +46,8 @@ class DeviceInfoView extends StatelessWidget {
                   if (!state.isLoading) {
                     return BlocBuilder<ConnectionBloc, ConnectionState>(
                       builder: (context, state) {
-                        if (state.serverStatus == ServerStatus.connected) {
+                        if (state.networkStatus == NetworkStatus.connected &&
+                            state.serverStatus == ServerStatus.connected) {
                           return OnOffInfoSection(device: device);
                         }
                         return SizedBox.shrink();

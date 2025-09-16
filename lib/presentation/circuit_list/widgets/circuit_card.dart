@@ -74,7 +74,7 @@ class CircuitCard extends StatelessWidget {
 
           BlocBuilder<ConnectionBloc, ConnectionState>(
             builder: (context, state) {
-              if (state.connectionStatus == ConnectionStatus.connected &&
+              if (state.networkStatus == NetworkStatus.connected &&
                   state.serverStatus == ServerStatus.connected) {
                 return Positioned(
                   bottom: 5,

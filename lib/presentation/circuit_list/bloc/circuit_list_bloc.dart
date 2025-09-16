@@ -2,7 +2,7 @@ import "dart:async";
 
 import "package:equatable/equatable.dart";
 import "package:flutter_bloc/flutter_bloc.dart";
-import "package:hydrogarden_mobile/data/device/device_sync_manager.dart";
+import "package:hydrogarden_mobile/domain/device/manager/device_sync_manager.dart";
 import "package:hydrogarden_mobile/domain/device/models/circuit.dart";
 import "package:hydrogarden_mobile/domain/device/models/device.dart";
 import "package:hydrogarden_mobile/presentation/connection/bloc/connection_bloc.dart";
@@ -44,14 +44,34 @@ class CircuitListBloc extends Bloc<CircuitListEvent, CircuitListState> {
     CircuitListTurnOffRequested event,
     Emitter<CircuitListState> emit,
   ) async {
-    await _syncManager.disableCircuit(event.deviceId, event.id);
+    try {
+      await _syncManager.disableCircuit(event.deviceId, event.id);
+    } catch (e) {
+      emit(
+        state.copyWith(
+          device: state.device,
+          isLoading: false,
+          error: "Nie udało się wyłączyć obwodu",
+        ),
+      );
+    }
   }
 
   Future<void> _onTurnOnRequested(
     CircuitListTurnOnRequested event,
     Emitter<CircuitListState> emit,
   ) async {
-    await _syncManager.enableCircuit(event.deviceId, event.id);
+    try {
+      await _syncManager.enableCircuit(event.deviceId, event.id);
+    } catch (e) {
+      emit(
+        state.copyWith(
+          device: state.device,
+          isLoading: false,
+          error: "Nie udało się włączyć obwodu",
+        ),
+      );
+    }
   }
 
   Future<void> _onRenameRequested(
@@ -68,7 +88,18 @@ class CircuitListBloc extends Bloc<CircuitListEvent, CircuitListState> {
     }).toList();
 
     final updatedDevice = currentDevice.copyWith(circuits: updatedCircuits);
-    await _syncManager.updateDevice(updatedDevice);
+    try {
+      await _syncManager.updateDevice(updatedDevice);
+    } catch (e) {
+      emit(
+        state.copyWith(
+          device: state.device,
+          isLoading: false,
+          error:
+              "Brak połączenia z serwerem, nie można zaktualizować nazwy obwodu.",
+        ),
+      );
+    }
   }
 
   void _onDeviceUpdated(
@@ -80,9 +111,7 @@ class CircuitListBloc extends Bloc<CircuitListEvent, CircuitListState> {
         ? syncState.devices.first
         : null;
 
-    emit(
-      state.copyWith(device: device, isLoading: false, error: syncState.error),
-    );
+    emit(state.copyWith(device: device, isLoading: false, error: null));
 
     _connectionBloc.add(
       ConnectionServerStatusUpdated(

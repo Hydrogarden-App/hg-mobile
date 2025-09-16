@@ -4,41 +4,8 @@ import "package:equatable/equatable.dart";
 import "package:flutter_bloc/flutter_bloc.dart";
 import "package:connectivity_plus/connectivity_plus.dart";
 
-enum ServerStatus { connected, disconnected }
-
-enum ConnectionStatus { connected, disconnected }
-
-class ConnectionState extends Equatable {
-  final ConnectionStatus connectionStatus;
-  final ServerStatus serverStatus;
-
-  const ConnectionState(this.connectionStatus, this.serverStatus);
-
-  ConnectionState copyWith({
-    ConnectionStatus? connectionStatus,
-    ServerStatus? serverStatus,
-  }) {
-    return ConnectionState(
-      connectionStatus ?? this.connectionStatus,
-      serverStatus ?? this.serverStatus,
-    );
-  }
-
-  @override
-  List<Object?> get props => [connectionStatus, serverStatus];
-}
-
-abstract class ConnectionEvent {}
-
-class ConnectionServerStatusUpdated extends ConnectionEvent {
-  final ServerStatus status;
-  ConnectionServerStatusUpdated(this.status);
-}
-
-class ConnectionNetworkStatusChanged extends ConnectionEvent {
-  final ConnectionStatus status;
-  ConnectionNetworkStatusChanged(this.status);
-}
+part "connection_event.dart";
+part "connection_state.dart";
 
 class ConnectionBloc extends Bloc<ConnectionEvent, ConnectionState> {
   final Connectivity _connectivity;
@@ -46,16 +13,13 @@ class ConnectionBloc extends Bloc<ConnectionEvent, ConnectionState> {
 
   ConnectionBloc({required Connectivity connectivity})
     : _connectivity = connectivity,
-      super(
-        ConnectionState(ConnectionStatus.connected, ServerStatus.connected),
-      ) {
+      super(ConnectionState(NetworkStatus.connected, ServerStatus.connected)) {
     on<ConnectionServerStatusUpdated>(_onServerStatusUpdated);
     on<ConnectionNetworkStatusChanged>(_onNetworkStatusChanged);
 
     _connectivitySubscription = _connectivity.onConnectivityChanged.listen((
       results,
     ) {
-      print("subscription told me to");
       add(
         ConnectionNetworkStatusChanged(_mapConnectivityResultToStatus(results)),
       );
@@ -68,16 +32,7 @@ class ConnectionBloc extends Bloc<ConnectionEvent, ConnectionState> {
   ) {
     final serverStatus = event.status;
 
-    if (serverStatus == ServerStatus.connected) {
-      emit(
-        state.copyWith(
-          serverStatus: ServerStatus.connected,
-          connectionStatus: ConnectionStatus.connected,
-        ),
-      );
-    } else {
-      emit(state.copyWith(serverStatus: ServerStatus.disconnected));
-    }
+    emit(state.copyWith(serverStatus: serverStatus));
   }
 
   void _onNetworkStatusChanged(
@@ -85,11 +40,19 @@ class ConnectionBloc extends Bloc<ConnectionEvent, ConnectionState> {
     Emitter<ConnectionState> emit,
   ) {
     final networkStatus = event.status;
-
-    emit(state.copyWith(connectionStatus: networkStatus));
+    if (networkStatus == NetworkStatus.connected) {
+      emit(state.copyWith(networkStatus: networkStatus));
+    } else {
+      emit(
+        state.copyWith(
+          networkStatus: networkStatus,
+          serverStatus: ServerStatus.disconnected,
+        ),
+      );
+    }
   }
 
-  ConnectionStatus _mapConnectivityResultToStatus(
+  NetworkStatus _mapConnectivityResultToStatus(
     List<ConnectivityResult> results,
   ) {
     final connectedResults = {
@@ -100,9 +63,7 @@ class ConnectionBloc extends Bloc<ConnectionEvent, ConnectionState> {
 
     final isConnected = results.any((r) => connectedResults.contains(r));
 
-    return isConnected
-        ? ConnectionStatus.connected
-        : ConnectionStatus.disconnected;
+    return isConnected ? NetworkStatus.connected : NetworkStatus.disconnected;
   }
 
   @override

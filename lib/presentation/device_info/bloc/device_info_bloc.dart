@@ -2,7 +2,7 @@ import "dart:async";
 
 import "package:equatable/equatable.dart";
 import "package:flutter_bloc/flutter_bloc.dart";
-import "package:hydrogarden_mobile/data/device/device_sync_manager.dart";
+import "package:hydrogarden_mobile/domain/device/manager/device_sync_manager.dart";
 import "package:hydrogarden_mobile/domain/device/models/device.dart";
 import "package:hydrogarden_mobile/presentation/connection/bloc/connection_bloc.dart";
 
@@ -43,14 +43,34 @@ class DeviceInfoBloc extends Bloc<DeviceInfoEvent, DeviceInfoState> {
     DeviceInfoTurnOffRequested event,
     Emitter<DeviceInfoState> emit,
   ) async {
-    await _syncManager.disableDevice(event.id);
+    try {
+      await _syncManager.disableDevice(event.id);
+    } catch (e) {
+      emit(
+        state.copyWith(
+          device: state.device,
+          isLoading: false,
+          error: "Nie udało się wyłączyć urządzenia.",
+        ),
+      );
+    }
   }
 
   Future<void> _onTurnOnRequested(
     DeviceInfoTurnOnRequested event,
     Emitter<DeviceInfoState> emit,
   ) async {
-    await _syncManager.enableDevice(event.id);
+    try {
+      await _syncManager.enableDevice(event.id);
+    } catch (e) {
+      emit(
+        state.copyWith(
+          device: state.device,
+          isLoading: false,
+          error: "Nie udało się włączyć urządzenia.",
+        ),
+      );
+    }
   }
 
   Future<void> _onRenameRequested(
@@ -61,7 +81,17 @@ class DeviceInfoBloc extends Bloc<DeviceInfoEvent, DeviceInfoState> {
     if (current == null) return;
 
     final renamed = current.copyWith(name: event.name);
-    await _syncManager.updateDevice(renamed);
+    try {
+      await _syncManager.updateDevice(renamed);
+    } catch (e) {
+      emit(
+        state.copyWith(
+          device: state.device,
+          isLoading: false,
+          error: "Brak połączenia z serwerem, nie można zaktualizować nazwy.",
+        ),
+      );
+    }
   }
 
   void _onDeviceUpdated(
@@ -73,9 +103,7 @@ class DeviceInfoBloc extends Bloc<DeviceInfoEvent, DeviceInfoState> {
         ? syncState.devices.first
         : null;
 
-    emit(
-      state.copyWith(device: device, isLoading: false, error: syncState.error),
-    );
+    emit(state.copyWith(device: device, isLoading: false, error: null));
 
     _connectionBloc.add(
       ConnectionServerStatusUpdated(

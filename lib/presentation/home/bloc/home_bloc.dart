@@ -2,7 +2,7 @@ import "dart:async";
 
 import "package:equatable/equatable.dart";
 import "package:flutter_bloc/flutter_bloc.dart";
-import "package:hydrogarden_mobile/data/device/device_sync_manager.dart";
+import "package:hydrogarden_mobile/domain/device/manager/device_sync_manager.dart";
 import "package:hydrogarden_mobile/domain/device/models/device.dart";
 import "package:hydrogarden_mobile/presentation/connection/bloc/connection_bloc.dart";
 
@@ -47,8 +47,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   void _onDevicesUpdated(_HomeDevicesUpdated event, Emitter<HomeState> emit) {
     final syncState = event.syncState;
-
-    print("update happened");
 
     emit(HomeState.loaded(syncState.devices));
 

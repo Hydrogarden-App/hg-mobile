@@ -13,7 +13,7 @@ class ConnectionStateWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<ConnectionBloc, ConnectionState>(
       builder: (context, state) {
-        if (state.connectionStatus == ConnectionStatus.disconnected) {
+        if (state.networkStatus == NetworkStatus.disconnected) {
           return Text(
             context.l10n.common_error_network,
             style: context.textTheme.bodySmall?.copyWith(

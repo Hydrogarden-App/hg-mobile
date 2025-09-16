@@ -3,7 +3,7 @@ import "package:hydrogarden_mobile/app/theme/color_consts.dart";
 
 abstract final class TextConsts {
   static const title = TextStyle(
-    fontSize: 40,
+    fontSize: 36,
     fontWeight: FontWeight.w600,
     color: ColorConsts.dark,
   );
