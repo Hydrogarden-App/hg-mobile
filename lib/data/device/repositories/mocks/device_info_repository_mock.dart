@@ -15,6 +15,7 @@ class DeviceInfoRepositoryMock implements DeviceInfoRepository {
 
   @override
   Future<List<Device>> getDevices() async {
+    print("getting info from THE REMOTE AGAIN");
     final delay = Duration(milliseconds: 1000 + _random.nextInt(2000));
     await Future.delayed(delay);
 

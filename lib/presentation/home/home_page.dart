@@ -1,4 +1,4 @@
-import "package:flutter/material.dart";
+import "package:flutter/material.dart" hide ConnectionState;
 import "package:flutter_bloc/flutter_bloc.dart";
 import "package:hydrogarden_mobile/app/app.dart";
 import "package:hydrogarden_mobile/app/utils/dependency_injection.dart";
@@ -20,10 +20,20 @@ class HomePage extends StatelessWidget {
         syncManager: getIt.get(),
         connectionBloc: context.read<ConnectionBloc>(),
       )..add(HomeDevicesRequested()),
-      child: HomeView(
-        navigateToDevice: (id) => context.router.pushNamed(
-          DeviceInfoPage.route,
-          pathParameters: {"id": id.toString()},
+      child: BlocListener<ConnectionBloc, ConnectionState>(
+        listenWhen: (previous, state) {
+          return previous.networkStatus != state.networkStatus &&
+              state.networkStatus == NetworkStatus.connected;
+        },
+        listener: (context, state) {
+          print("syncing after reconnect");
+          context.read<HomeBloc>().add(HomeDevicesSyncRequested());
+        },
+        child: HomeView(
+          navigateToDevice: (id) => context.router.pushNamed(
+            DeviceInfoPage.route,
+            pathParameters: {"id": id.toString()},
+          ),
         ),
       ),
     );
