@@ -5,6 +5,7 @@ import "package:hydrogarden_mobile/app/datasource/remote/client_provider.dart";
 import "package:hydrogarden_mobile/data/authentication/repositories/authentication_local_repository_impl.dart";
 import "package:hydrogarden_mobile/data/authentication/repositories/authentication_remote_repository_impl.dart";
 import "package:hydrogarden_mobile/data/authentication/repositories/authentication_repository_impl.dart";
+import "package:hydrogarden_mobile/data/device/device_sync_manager.dart";
 import "package:hydrogarden_mobile/data/device/repositories/device_info_repository_local_impl.dart";
 import "package:hydrogarden_mobile/data/device/repositories/device_info_repository_remote_impl.dart";
 import "package:hydrogarden_mobile/data/device/repositories/device_state_repository_remote_impl.dart";
@@ -52,6 +53,14 @@ void _setupRepository() {
   getIt.registerSingleton<DeviceInfoRepositoryMock>(DeviceInfoRepositoryMock());
   getIt.registerSingleton<DeviceStateRepositoryMock>(
     DeviceStateRepositoryMock(),
+  );
+
+  getIt.registerSingleton<DeviceSyncManager>(
+    DeviceSyncManager(
+      localDeviceInfoRepository: getIt.get<DeviceInfoRepositoryLocalImpl>(),
+      remoteDeviceInfoRepository: getIt.get<DeviceInfoRepositoryMock>(),
+      deviceStateRepository: getIt.get<DeviceStateRepositoryMock>(),
+    ),
   );
 }
 

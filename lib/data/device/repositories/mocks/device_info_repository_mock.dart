@@ -15,7 +15,7 @@ class DeviceInfoRepositoryMock implements DeviceInfoRepository {
 
   @override
   Future<List<Device>> getDevices() async {
-    final delay = Duration(milliseconds: 100 + _random.nextInt(2000));
+    final delay = Duration(milliseconds: 1000 + _random.nextInt(2000));
     await Future.delayed(delay);
 
     final count = 1 + _random.nextInt(10);

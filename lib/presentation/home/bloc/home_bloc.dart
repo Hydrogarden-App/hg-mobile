@@ -1,54 +1,71 @@
+import "dart:async";
+
 import "package:equatable/equatable.dart";
 import "package:flutter_bloc/flutter_bloc.dart";
+import "package:hydrogarden_mobile/data/device/device_sync_manager.dart";
 import "package:hydrogarden_mobile/domain/device/models/device.dart";
-import "package:hydrogarden_mobile/domain/device/repositories/device_info_repository.dart";
 import "package:hydrogarden_mobile/presentation/connection/bloc/connection_bloc.dart";
 
 part "home_event.dart";
 part "home_state.dart";
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
-  final DeviceInfoRepository localDeviceInfoRepository;
-  final DeviceInfoRepository remoteDeviceInfoRepository;
-  final ConnectionBloc connectionBloc;
+  final DeviceSyncManager _syncManager;
+  final ConnectionBloc _connectionBloc;
+  StreamSubscription? _subscription;
 
   HomeBloc({
-    required this.localDeviceInfoRepository,
-    required this.remoteDeviceInfoRepository,
-    required this.connectionBloc,
-  }) : super(const HomeState.loading()) {
-    on<HomeDevicesRequested>((event, emit) async {
-      emit(HomeState.loading());
+    required DeviceSyncManager syncManager,
+    required ConnectionBloc connectionBloc,
+  }) : _syncManager = syncManager,
+       _connectionBloc = connectionBloc,
+       super(const HomeState.loading()) {
+    on<HomeDevicesRequested>(_onDevicesRequested);
 
-      final devices = await localDeviceInfoRepository.getDevices();
-      emit(HomeState.loaded(devices));
-      try {
-        final remoteDevices = await remoteDeviceInfoRepository.getDevices();
-        emit(HomeState.loaded(remoteDevices));
-        connectionBloc.add(
-          ConnectionServerStatusUpdated(ServerStatus.connected),
-        );
-        final localDeviceIds = devices.map((d) => d.id).toSet();
-        final remoteDeviceIds = remoteDevices.map((d) => d.id).toSet();
+    on<HomeDevicesSyncRequested>(_onDevicesSyncRequested);
 
-        for (final device in remoteDevices) {
-          if (localDeviceIds.contains(device.id)) {
-            await localDeviceInfoRepository.updateDevice(device);
-          } else {
-            await localDeviceInfoRepository.createDevice(device);
-          }
-        }
+    on<_HomeDevicesUpdated>(_onDevicesUpdated);
+  }
 
-        for (final local in devices) {
-          if (!remoteDeviceIds.contains(local.id)) {
-            await localDeviceInfoRepository.removeDevice(local.id);
-          }
-        }
-      } catch (_) {
-        connectionBloc.add(
-          ConnectionServerStatusUpdated(ServerStatus.disconnected),
-        );
-      }
+  Future<void> _onDevicesRequested(
+    HomeDevicesRequested event,
+    Emitter<HomeState> emit,
+  ) async {
+    await _subscription?.cancel();
+
+    print("initial load req");
+
+    _subscription = _syncManager.watchDevices().listen((syncState) {
+      add(_HomeDevicesUpdated(syncState));
     });
+  }
+
+  Future<void> _onDevicesSyncRequested(
+    HomeDevicesSyncRequested event,
+    Emitter<HomeState> emit,
+  ) async {
+    await _syncManager.syncDevices();
+  }
+
+  void _onDevicesUpdated(_HomeDevicesUpdated event, Emitter<HomeState> emit) {
+    final syncState = event.syncState;
+
+    print("update happened");
+
+    emit(HomeState.loaded(syncState.devices));
+
+    _connectionBloc.add(
+      ConnectionServerStatusUpdated(
+        syncState.isConnected
+            ? ServerStatus.connected
+            : ServerStatus.disconnected,
+      ),
+    );
+  }
+
+  @override
+  Future<void> close() {
+    _subscription?.cancel();
+    return super.close();
   }
 }

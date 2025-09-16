@@ -7,6 +7,7 @@ import "package:path_provider/path_provider.dart";
 
 Future<void> setupHive() async {
   WidgetsFlutterBinding.ensureInitialized();
+  print("init hive");
   final dir = await getApplicationDocumentsDirectory();
   Hive.init(dir.path);
 

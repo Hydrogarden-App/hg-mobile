@@ -38,6 +38,7 @@ class AppFrame extends StatelessWidget {
           : Padding(
               padding: EdgeInsetsGeometry.all(AppPaddings.large),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   TextButton(

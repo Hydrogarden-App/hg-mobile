@@ -2,24 +2,25 @@ import "dart:async";
 import "package:hydrogarden_mobile/domain/device/models/device.dart";
 import "package:hydrogarden_mobile/domain/device/repositories/device_info_repository.dart";
 import "package:hydrogarden_mobile/domain/device/repositories/device_state_repository.dart";
+import "package:rxdart/rxdart.dart";
 
-class DeviceSyncState {
+class DevicesSyncState {
   final List<Device> devices;
   final bool isConnected;
   final String? error;
 
-  const DeviceSyncState({
+  const DevicesSyncState({
     required this.devices,
     required this.isConnected,
     this.error,
   });
 
-  DeviceSyncState copyWith({
+  DevicesSyncState copyWith({
     List<Device>? devices,
     bool? isConnected,
     String? error,
   }) {
-    return DeviceSyncState(
+    return DevicesSyncState(
       devices: devices ?? this.devices,
       isConnected: isConnected ?? this.isConnected,
       error: error,
@@ -32,8 +33,10 @@ class DeviceSyncManager {
   final DeviceInfoRepository remoteDeviceInfoRepository;
   final DeviceStateRepository deviceStateRepository;
 
-  final StreamController<DeviceSyncState> _controller =
-      StreamController<DeviceSyncState>.broadcast();
+  final BehaviorSubject<DevicesSyncState> _controller =
+      BehaviorSubject<DevicesSyncState>.seeded(
+        const DevicesSyncState(devices: [], isConnected: false),
+      );
 
   List<Device> _currentDevices = [];
 
@@ -45,9 +48,9 @@ class DeviceSyncManager {
     _loadLocal();
   }
 
-  Stream<DeviceSyncState> watchDevices() => _controller.stream;
+  Stream<DevicesSyncState> watchDevices() => _controller.stream;
 
-  Stream<DeviceSyncState> watchDevice(int deviceId) {
+  Stream<DevicesSyncState> watchDevice(int deviceId) {
     return watchDevices().map((state) {
       final device = state.devices.where((d) => d.id == deviceId).firstOrNull;
       return state.copyWith(devices: device != null ? [device] : const []);
@@ -190,14 +193,18 @@ class DeviceSyncManager {
   }
 
   Future<void> _loadLocal() async {
+    print("ladowanie");
     final localDevices = await localDeviceInfoRepository.getDevices();
     _currentDevices = localDevices;
     _emit(devices: localDevices, isConnected: false);
+    print("got ${localDevices.length} from local");
     try {
       final remoteDevices = await remoteDeviceInfoRepository.getDevices();
+      print("got remote ${remoteDevices.length}");
       _syncLocalWithRemote(localDevices, remoteDevices);
       _currentDevices = remoteDevices;
       _emit(devices: remoteDevices, isConnected: true);
+      print("emmited");
     } catch (e) {
       _emit(devices: localDevices, isConnected: false);
     }
@@ -210,7 +217,7 @@ class DeviceSyncManager {
   }) {
     if (!_controller.isClosed) {
       _controller.add(
-        DeviceSyncState(
+        DevicesSyncState(
           devices: devices,
           isConnected: isConnected,
           error: error,

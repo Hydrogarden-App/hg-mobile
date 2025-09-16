@@ -16,3 +16,11 @@ final class HomeDeviceRemoved extends HomeEvent {
 }
 
 final class HomeDevicesRequested extends HomeEvent {}
+
+class HomeDevicesSyncRequested extends HomeEvent {}
+
+class _HomeDevicesUpdated extends HomeEvent {
+  final DevicesSyncState syncState;
+
+  const _HomeDevicesUpdated(this.syncState);
+}

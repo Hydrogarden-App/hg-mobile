@@ -3,8 +3,8 @@ import "package:hydrogarden_mobile/app/app.dart";
 import "package:hydrogarden_mobile/app/utils/dependency_injection.dart";
 import "package:hydrogarden_mobile/app/datasource/local/hive.dart";
 
-void main() {
+void main() async {
+  await setupHive();
   setupGetIt();
-  setupHive();
   runApp(const MyApp());
 }
