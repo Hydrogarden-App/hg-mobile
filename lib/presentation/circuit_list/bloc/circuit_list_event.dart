@@ -22,6 +22,12 @@ final class CircuitListTurnOffRequested extends CircuitListEvent {
   CircuitListTurnOffRequested(this.deviceId, this.id);
 }
 
+final class _CircuitListUpdated extends CircuitListEvent {
+  final DevicesSyncState syncState;
+
+  const _CircuitListUpdated(this.syncState);
+}
+
 final class CircuitListTurnOnRequested extends CircuitListEvent {
   int deviceId;
   int id;

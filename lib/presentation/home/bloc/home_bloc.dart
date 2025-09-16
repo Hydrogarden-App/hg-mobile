@@ -33,8 +33,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   ) async {
     await _subscription?.cancel();
 
-    print("initial load req");
-
     _subscription = _syncManager.watchDevices().listen((syncState) {
       add(_HomeDevicesUpdated(syncState));
     });

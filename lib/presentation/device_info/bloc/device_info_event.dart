@@ -20,6 +20,11 @@ final class DeviceInfoDataRequested extends DeviceInfoEvent {
   DeviceInfoDataRequested(this.id);
 }
 
+final class _DeviceInfoUpdated extends DeviceInfoEvent {
+  final DevicesSyncState syncState;
+  _DeviceInfoUpdated(this.syncState);
+}
+
 final class DeviceInfoTurnOffRequested extends DeviceInfoEvent {
   int id;
   DeviceInfoTurnOffRequested(this.id);

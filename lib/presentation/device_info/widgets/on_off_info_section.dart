@@ -31,7 +31,7 @@ class OnOffInfoSection extends StatelessWidget {
             );
           },
           icon: Icon(
-            Icons.settings_power,
+            Icons.power_settings_new,
             size: 48,
             color: isOn
                 ? context.colorScheme.secondary
