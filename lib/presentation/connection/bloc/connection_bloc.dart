@@ -60,16 +60,7 @@ class ConnectionBloc extends Bloc<ConnectionEvent, ConnectionState> {
         ConnectionNetworkStatusChanged(_mapConnectivityResultToStatus(results)),
       );
     });
-
-    // _init();
   }
-
-  // Future<void> _init() async {
-  //   final result = await _connectivity.checkConnectivity();
-  //   print("Init result");
-
-  //   add(ConnectionNetworkStatusChanged(_mapConnectivityResultToStatus(result)));
-  // }
 
   void _onServerStatusUpdated(
     ConnectionServerStatusUpdated event,
