@@ -14,6 +14,7 @@ class DeviceStateRepositoryMock implements DeviceStateRepository {
   Future<Device> enableDevice(int deviceId) async {
     _mockDevice = _mockDevice.copyWith(
       id: deviceId,
+      name: "Test Device $deviceId",
       desiredState: DeviceState.alive,
       state: DeviceState.alive,
     );
@@ -25,6 +26,7 @@ class DeviceStateRepositoryMock implements DeviceStateRepository {
   Future<Device> disableDevice(int deviceId) async {
     _mockDevice = _mockDevice.copyWith(
       id: deviceId,
+      name: "Test Device $deviceId",
       desiredState: DeviceState.dead,
       state: DeviceState.dead,
     );
@@ -41,7 +43,11 @@ class DeviceStateRepositoryMock implements DeviceStateRepository {
       return circuit;
     }).toList();
 
-    _mockDevice = _mockDevice.copyWith(id: deviceId, circuits: updatedCircuits);
+    _mockDevice = _mockDevice.copyWith(
+      id: deviceId,
+      name: "Test Device $deviceId",
+      circuits: updatedCircuits,
+    );
 
     return _mockDevice;
   }
@@ -55,7 +61,11 @@ class DeviceStateRepositoryMock implements DeviceStateRepository {
       return circuit;
     }).toList();
 
-    _mockDevice = _mockDevice.copyWith(id: deviceId, circuits: updatedCircuits);
+    _mockDevice = _mockDevice.copyWith(
+      id: deviceId,
+      name: "Test Device $deviceId",
+      circuits: updatedCircuits,
+    );
 
     return _mockDevice;
   }
