@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-flutter test
+fvm flutter test
 fvm dart format lib/**.dart && fvm dart fix --apply lib/**.dart
