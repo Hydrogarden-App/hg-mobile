@@ -1,3 +1,4 @@
+import "package:clerk_flutter/clerk_flutter.dart";
 import "package:flutter/widgets.dart";
 import "package:hydrogarden_mobile/app/app.dart";
 import "package:hydrogarden_mobile/presentation/authentication/pages/register_page.dart";
@@ -10,6 +11,7 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // return ClerkAuthentication();
     return AuthView(
       isLogin: true,
       onRedirect: () => context.router.push(RegisterPage.route),

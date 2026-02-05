@@ -1,58 +1,99 @@
+import "dart:async";
 import "package:equatable/equatable.dart";
 import "package:flutter_bloc/flutter_bloc.dart";
+import "package:clerk_flutter/clerk_flutter.dart";
+import "package:clerk_auth/clerk_auth.dart" as clerk; // Underlying SDK logic
 
 import "package:hydrogarden_mobile/app/datasource/remote/client_provider.dart";
-import "package:hydrogarden_mobile/domain/authentication/repositories/authentication_repository.dart";
 import "package:hydrogarden_mobile/domain/authentication/authentication_status.dart";
 
 part "authentication_event.dart";
 part "authentication_state.dart";
 
-class AuthenticationBloc
-    extends Bloc<AuthenticationEvent, AuthenticationState> {
-  final AuthenticationRepository _authenticationRepository;
+class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> {
+  final ClerkAuthState _clerkAuth;
   final ClientProvider _clientProvider;
 
   AuthenticationBloc({
-    required AuthenticationRepository authenticationRepository,
+    required ClerkAuthState clerkAuth,
     required ClientProvider clientProvider,
-  }) : _authenticationRepository = authenticationRepository,
-       _clientProvider = clientProvider,
-       super(const AuthenticationState.unknown()) {
-    on<AuthenticationCheckRequested>((event, emit) async {
-      final token = await _authenticationRepository.getToken();
+  })  : _clerkAuth = clerkAuth,
+        _clientProvider = clientProvider,
+        super(const AuthenticationState.unknown()) {
 
-      if (token != null) {
-        _clientProvider.updateToken(token);
-        emit(AuthenticationState.authenticated(token));
+    _clerkAuth.addListener(_onClerkStateChanged);
+    _clerkAuth.errorStream.listen(_onError);
+
+    on<AuthenticationCheckRequested>((event, emit) async {
+      print("HUJ");
+      if (_clerkAuth.isSignedIn) {
+        print("SIGNED IN");
+        // Clerk handles token refreshing automatically.
+        // We just fetch the latest valid JWT for our API provider.
+        final sessionToken = await _clerkAuth.sessionToken();
+        if (sessionToken != null) {
+          _clientProvider.updateToken(sessionToken.jwt);
+          emit(AuthenticationState.authenticated(sessionToken.jwt));
+        }
       } else {
+        print("NOT SIGNED IN");
+        emit(const AuthenticationState.unauthenticated());
+      }
+    });
+
+    on<AuthenticationLoginRequested>((event, emit) async {
+      print("KURWA");
+      try {
+        await _clerkAuth.attemptSignIn(
+          strategy: clerk.Strategy.password,
+          identifier: event.email,
+          password: event.password,
+        );
+        // We don't manually emit here; _onClerkStateChanged will handle it.
+      } catch (e) {
         emit(const AuthenticationState.unauthenticated());
       }
     });
 
     on<AuthenticationSignupRequested>((event, emit) async {
-      final token = await _authenticationRepository.register(
-        email: event.email,
-        password: event.password,
-      );
-      _clientProvider.updateToken(token);
-      emit(AuthenticationState.authenticated(token));
-    });
+      print("dfhajlfd;ds");
+      try {
+        await _clerkAuth.attemptSignUp(
+          strategy: clerk.Strategy.password, // Adjust based on your Clerk Dashboard settings
+          emailAddress: event.email,
 
-    on<AuthenticationLoginRequested>((event, emit) async {
-      final token = await _authenticationRepository.login(
-        email: event.email,
-        password: event.password,
-      );
-      _clientProvider.updateToken(token);
-      emit(AuthenticationState.authenticated(token));
+          password: event.password,
+          passwordConfirmation: event.password
+        );
+      } catch (e) {
+        emit(const AuthenticationState.unauthenticated());
+      }
     });
 
     on<AuthenticationLogoutRequested>((event, emit) async {
-      await _authenticationRepository.logout();
-      emit(AuthenticationState.unauthenticated());
+      print("logout");
+      await _clerkAuth.signOut();
     });
 
     add(AuthenticationCheckRequested());
+  }
+
+  void _onClerkStateChanged() {
+    add(AuthenticationCheckRequested());
+  }
+
+  void _onError(clerk.AuthError error) {
+    // Handle authentication errors if needed
+    print("Authentication error: ${error.message}");
+    print(error);
+    print(error.code);
+    print(error.argument);
+  }
+
+
+  @override
+  Future<void> close() {
+    _clerkAuth.removeListener(_onClerkStateChanged);
+    return super.close();
   }
 }

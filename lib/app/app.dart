@@ -1,4 +1,5 @@
-// Openapi Generator last run: : 2026-02-02T21:01:58.881287
+// Openapi Generator last run: : 2026-02-02T22:13:07.794166
+import "package:clerk_flutter/clerk_flutter.dart";
 import "package:connectivity_plus/connectivity_plus.dart";
 import "package:flutter/material.dart";
 import "package:flutter_bloc/flutter_bloc.dart";
@@ -19,6 +20,7 @@ import "package:hydrogarden_mobile/app/l10n/arb/app_localizations.g.dart";
 import "package:hydrogarden_mobile/presentation/authentication/bloc/authentication_bloc.dart";
 import "package:hydrogarden_mobile/presentation/home/home_page.dart";
 
+import "package:hydrogarden_mobile/app/datasource/remote/client_provider.dart";
 import "theme/app_theme.dart";
 
 part "router.dart";
@@ -33,23 +35,39 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final authBloc = getIt<AuthenticationBloc>();
 
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider<AuthenticationBloc>.value(value: authBloc),
-        BlocProvider<ConnectionBloc>(
-          create: (BuildContext context) =>
-              ConnectionBloc(connectivity: getIt<Connectivity>()),
+    return ClerkAuth(
+        config: ClerkAuthConfig(
+          publishableKey: "",
         ),
-      ],
-      child: MaterialApp.router(
-        title: "Hydrogarden Mobile",
-        theme: AppTheme().light,
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
-        supportedLocales: AppLocalizations.supportedLocales,
-        routerConfig: AppRouter(authBloc).router,
-      ),
+        child: ClerkAuthBuilder(builder: (context, clerkAuthState) {
+
+          return MultiBlocProvider(
+            providers: [
+              BlocProvider<AuthenticationBloc>(
+                create: (context ) => AuthenticationBloc(clerkAuth: clerkAuthState, clientProvider: getIt<ClientProvider>()),
+              ),
+              BlocProvider<ConnectionBloc>(
+                create: (BuildContext context) =>
+                    ConnectionBloc(connectivity: getIt<Connectivity>()),
+              ),
+            ],
+            child:  Builder(
+                builder: (innerContext) {
+                  return MaterialApp.router(
+                    title: "Hydrogarden Mobile",
+                    theme: AppTheme().light,
+                    localizationsDelegates: AppLocalizations
+                        .localizationsDelegates,
+                    supportedLocales: AppLocalizations.supportedLocales,
+                    routerConfig: AppRouter(innerContext.read<AuthenticationBloc>())
+                        .router,
+                  );
+                }
+            )
+          );
+        }
+        ),
     );
   }
 }

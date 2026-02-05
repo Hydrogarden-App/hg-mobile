@@ -24,7 +24,7 @@ class AuthView extends StatelessWidget {
           );
   }
 
-  static const _passwordLength = 6;
+  static const _passwordLength = 1;
 
   final bool isLogin;
   final void Function() onRedirect;
