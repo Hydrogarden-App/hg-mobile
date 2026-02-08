@@ -4,16 +4,12 @@ sealed class AuthenticationEvent {
   const AuthenticationEvent();
 }
 
-final class AuthenticationSignupRequested extends AuthenticationEvent {
-  String email;
-  String password;
-  AuthenticationSignupRequested(this.email, this.password);
-}
+enum OAuthProvider { apple, google }
 
-final class AuthenticationLoginRequested extends AuthenticationEvent {
-  String email;
-  String password;
-  AuthenticationLoginRequested(this.email, this.password);
+final class AuthenticationOAuthRequested extends AuthenticationEvent {
+  final OAuthProvider provider;
+  final BuildContext context;
+  const AuthenticationOAuthRequested(this.provider, this.context);
 }
 
 final class AuthenticationLogoutRequested extends AuthenticationEvent {}

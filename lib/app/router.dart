@@ -53,11 +53,6 @@ class AppRouter {
         pageBuilder: (context, state) =>
             const NoTransitionPage(child: LoginPage()),
       ),
-      GoRoute(
-        path: RegisterPage.route,
-        pageBuilder: (context, state) =>
-            const NoTransitionPage(child: RegisterPage()),
-      ),
 
       GoRoute(
         path: SettingsPage.route,
@@ -84,9 +79,7 @@ class AppRouter {
     redirect: (context, state) {
       final status = _authBloc.state.status;
       final isLoggedIn = status == AuthenticationStatus.authenticated;
-      final isAuthRoute =
-          state.matchedLocation == LoginPage.route ||
-          state.matchedLocation == RegisterPage.route;
+      final isAuthRoute = state.matchedLocation == LoginPage.route;
 
       if (!isLoggedIn && !isAuthRoute) {
         return LoginPage.route;

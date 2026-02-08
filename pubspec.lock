@@ -17,6 +17,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.4.1"
+  app_links:
+    dependency: "direct main"
+    description:
+      name: app_links
+      sha256: "3ced568a5d9e309e99af71285666f1f3117bddd0bd5b3317979dccc1a40cada4"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.5.1"
   args:
     dependency: transitive
     description:
@@ -133,18 +141,18 @@ packages:
     dependency: "direct main"
     description:
       name: clerk_auth
-      sha256: "20b60861ce3708cc69d35c939a4449dbc2cb727a28813f38dd84311e765816ee"
+      sha256: "9dba5fe674de759f46d5501230f954d4841f1a9497113fd62a61440ae4931c8d"
       url: "https://pub.dev"
     source: hosted
-    version: "0.0.12-beta"
+    version: "0.0.14-beta"
   clerk_flutter:
     dependency: "direct main"
     description:
       name: clerk_flutter
-      sha256: "0cf2c25f762c4b899f8fdb110863680909ca33cc5d2f097142a8c52d4b43fc64"
+      sha256: a0bc7873dc14b7662fb8bcfae9c038225600b633e25eb9c582a3a01ef5c79925
       url: "https://pub.dev"
     source: hosted
-    version: "0.0.12-beta"
+    version: "0.0.14-beta"
   cli_launcher:
     dependency: transitive
     description:
@@ -358,6 +366,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "9.1.1"
+  flutter_dotenv:
+    dependency: "direct main"
+    description:
+      name: flutter_dotenv
+      sha256: b7c7be5cd9f6ef7a78429cabd2774d3c4af50e79cb2b7593e3d5d763ef95c61b
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.2.1"
   flutter_lints:
     dependency: "direct dev"
     description:
@@ -509,6 +525,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.3.2"
+  gtk:
+    dependency: transitive
+    description:
+      name: gtk
+      sha256: e8ce9ca4b1df106e4d72dad201d345ea1a036cc12c360f1a7d5a758f78ffa42c
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.1.0"
   hg_openapi:
     dependency: "direct main"
     description:
@@ -965,6 +989,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "18.2.2"
+  retry:
+    dependency: transitive
+    description:
+      name: retry
+      sha256: "822e118d5b3aafed083109c72d5f484c6dc66707885e07c0fbcb8b986bba7efc"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.1.2"
   rxdart:
     dependency: "direct main"
     description:
